@@ -1,84 +1,86 @@
-/*** Generiek ***/
-body {
-  padding: 0;
-  width: 50em;
-  margin: auto;
+* {
+	margin: 0;
+}
+ul {
+	padding-left: 0;
 }
 
-button {
-  background-color: #2F4F4F; 
-  color: white;
+/* HEADER */
+
+.headerbalk {
+	text-align: center;
+	background-color: DarkGreen;
+	color: #FFF;
+	padding: 0.25em;
+	font-weight: 900;
+	font-size: 1.5em;
 }
 
-#menu {
-  float: left;
-  width: 25%;
-  background-color: #DCDCDC; 
+/* NAVIGATION */
+.navigatiebalk {
+	float: left;
+	border: 1px solid #000;
+	margin: 2em 2em;
+	background-color: Gray;
+	border-radius: 0.5em;
 }
 
-#main {
-  float: right;
-  width: 70%;
-  background-color: white;
-  padding-left: 2%;
-  margin-left: 2%;
+.navheader {
+	margin: 1em;
+	text-align: center;
+	font-size: 1.5em;
+	color: #FFF;
 }
 
-#header {
-  background-color: #2F4F4F; 
-  color: white;  
+.menuitem {
+	list-style: none;
+	color: #fff;
 }
 
-#header, h2 {
-  text-align: center;
+.menuitemlink {
+	color: inherit;
+	text-decoration: inherit;
+	display: block;
+	background-color: DarkGreen;
+	padding: 0.35em;
+	margin: 0.5em;
+	border-radius: 0.5em;
 }
 
-/*** Navigatie ***/
-.nav li {
-  list-style-type: none;
-  margin-left: 0.2em;
-  margin-right: 0.2em;
-  padding: 0.2em;
-  color: white;  
+.menuitemlink:hover {
+	transform: scale(1.1);
 }
 
-ul.nav a {
-  text-decoration: none;
-  color: white;
+/* CONTENT */
+.contentpage {
+	text-align: center;
+	font-size: 1.75em;
+	padding: 0.5em;
 }
 
-ul.nav a:hover {
-  color: yellow; 
+.contentpage p, h1 {
+	padding: 0.25em;
 }
 
-ul.nav li {
-  background-color: #2F4F4F;
-  border: 0.0625em solid #000000;
-  margin: 0.2em;
-  padding: 0.2em;
-}
-/*** Speciale componenten ***/
-
-#mySnakeCanvas {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  border: 0.0625em solid #000000;
+.buttons {
+	text-align: center;
 }
 
-#snakeButtons {
- /* Describe how inline-level content of a block container is aligned*/
- text-align:center;   
+@media screen and (max-width: 768px) {
+	.buttons {
+		clear: left;
+	}
 }
 
-#startSnake, #stopSnake {
-  width: 5em;
-  margin: 0.5em auto;
-
-  
-
+.button {
+	background-color: DarkGreen;
+	color: #FFF;
+	padding: 0.25em 1em;
+	margin: 1em 1em;
 }
 
-
-
- 
+.gamecanvas {
+	border: 1px solid #000;
+	display: block;
+	margin: 0 auto;
+}
