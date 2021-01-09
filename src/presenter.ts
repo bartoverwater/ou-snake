@@ -1,6 +1,7 @@
 import { Direction } from "./direction.js";
 import * as view from "./view.js";
 import * as model from "./model.js";
+import settings from "./game-settings.js";
 
 // let snake: Snake;
 // const foods: Food[] = []; // voedsel voor de slang
@@ -9,22 +10,37 @@ import * as model from "./model.js";
 // let xMax: number; // maximale waarde van x = width - R
 // let yMax: number; // maximale waarde van y = height - R
 // let direction = Direction.Up;
-let gameModel: model.GameModel;
-
-export class Presenter {
-  constructor() {
-    view.onStartButtonClicked(init);
-  }
-}
 
 /**
   @function init() -> void
   @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
 */
 const init = () => {
-  gameModel = model.newGame();
-  view.drawModelOnCanvas(gameModel);
+  model.newGame();
+  view.onDirectionChanged(changeDirection);
+  eventLoop();
 };
+
+const eventLoop = () => {
+  if (model.gameOver) {
+    return;
+  }
+  setTimeout(() => {
+    model.moveSnake();
+    view.drawModelOnCanvas(model.gameModel);
+    eventLoop();
+  }, settings.SLEEPTIME);
+};
+
+const changeDirection = (newDirection: Direction) => {
+  model.changeDirection(newDirection);
+};
+
+export class Presenter {
+  constructor() {
+    view.onStartButtonClicked(init);
+  }
+}
 
 // /**
 //   @function move(direction) -> void

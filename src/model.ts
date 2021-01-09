@@ -1,3 +1,4 @@
+import { Direction } from "./direction.js";
 import settings from "./game-settings.js";
 
 export interface GameModel {
@@ -5,32 +6,39 @@ export interface GameModel {
   snake: Point[];
 }
 
-export class Point {
+export interface Point {
   color: string;
   x: number;
   y: number;
-
-  constructor(x: number, y: number, color: string) {
-    this.color = color;
-    this.x = x;
-    this.y = y;
-  }
 }
 
-export function newGame(): GameModel {
-  return new SnakeGameModel();
+export let gameModel: GameModel;
+export let gameOver = false;
+
+export function newGame(): void {
+  gameModel = new SnakeGameModel();
+}
+
+//todo create move functions
+export function changeDirection(newDirection: Direction) {
+  //todo implement
+}
+
+export function moveSnake(): GameModel {
+  //todo implement
+  console.log("move called");
+  return gameModel;
 }
 
 class SnakeGameModel implements GameModel {
   food: Point[] = [];
   snake: Point[];
+  direction: Direction = Direction.Up;
 
   constructor() {
     this.food = this.createFoods(5);
     this.snake = this.createStartSnake();
   }
-
-  //todo create move functions
 
   /**
       @function createFoods() -> array met food
@@ -44,7 +52,8 @@ class SnakeGameModel implements GameModel {
     }
     return [...this.food, ...newFoods];
   }
-  //todo Prevent collision
+
+  //todo Prevent collision with pointCollides function
   createFood(): Point {
     return {
       color: settings.COLORS.FOOD,

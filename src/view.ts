@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { Direction } from "./direction.js";
 import { GameModel, Point } from "./model.js";
 
 const canvas = document.getElementById("mySnakeCanvas")! as HTMLCanvasElement;
@@ -10,13 +11,21 @@ export function onStartButtonClicked(onStartFunction: () => void): void {
     .addEventListener("click", () => onStartFunction());
 }
 
-const drawPoint = (point: Point): void => {
-  canvasContext.fillStyle = point.color;
-  canvasContext.fillRect(point.x, point.y, 10, 10);
-};
-
 export function drawModelOnCanvas(model: GameModel): void {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
   model.snake.forEach(drawPoint);
   model.food.forEach(drawPoint);
 }
+
+export function onDirectionChanged(
+  changeDirFunction: (newDirection: Direction) => void
+): void {
+  document.addEventListener("keydown", (event) => {
+    changeDirFunction(<Direction>event.key);
+  });
+}
+
+const drawPoint = (point: Point): void => {
+  canvasContext.fillStyle = point.color;
+  canvasContext.fillRect(point.x, point.y, 10, 10);
+};
