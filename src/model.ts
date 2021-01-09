@@ -1,4 +1,6 @@
-export interface Model {
+import settings from "./game-settings.js";
+
+export interface GameModel {
   food: Point[];
   snake: Point[];
 }
@@ -15,7 +17,11 @@ export class Point {
   }
 }
 
-export GameModel implements Model {
+export function newGame(): GameModel {
+  return new SnakeGameModel();
+}
+
+class SnakeGameModel implements GameModel {
   food: Point[] = [];
   snake: Point[];
 
@@ -23,6 +29,8 @@ export GameModel implements Model {
     this.food = this.createFoods(5);
     this.snake = this.createStartSnake();
   }
+
+  //todo create move functions
 
   /**
       @function createFoods() -> array met food
@@ -36,10 +44,10 @@ export GameModel implements Model {
     }
     return [...this.food, ...newFoods];
   }
-
+  //todo Prevent collision
   createFood(): Point {
     return {
-      color: "Olive",
+      color: settings.COLORS.FOOD,
       x: getRandomInt(0 + 10, 360 - 10),
       y: getRandomInt(0 + 10, 360 - 10),
     };
@@ -48,17 +56,29 @@ export GameModel implements Model {
   createStartSnake(): Point[] {
     return [
       //width and R
-      { color: "DarkOrange", x: 360 / 2, y: 360 / 2 },
-      { color: "DarkRed", x: 360 / 2, y: 360 / 2 + 10 },
-      { color: "DarkRed", x: 360 / 2, y: 360 / 2 + 20 },
-      { color: "DarkRed", x: 360 / 2, y: 360 / 2 + 30 },
+      { color: settings.COLORS.SNAKE_HEAD, x: 360 / 2, y: 360 / 2 },
+      {
+        color: settings.COLORS.SNAKE_BODY,
+        x: 360 / 2,
+        y: 360 / 2 + settings.ELEMENT_RADIUS,
+      },
+      {
+        color: settings.COLORS.SNAKE_BODY,
+        x: 360 / 2,
+        y: 360 / 2 + settings.ELEMENT_RADIUS * 2,
+      },
+      {
+        color: settings.COLORS.SNAKE_BODY,
+        x: 360 / 2,
+        y: 360 / 2 + settings.ELEMENT_RADIUS * 3,
+      },
     ];
   }
 
   pointCollides(other: Point): boolean {
     const collides = (element: Point): boolean =>
       other.x === element.x && other.y === element.y;
-    return this.food.some(collides) && this.snake.some(collides);
+    return this.food.some(collides) || this.snake.some(collides);
   }
 }
 

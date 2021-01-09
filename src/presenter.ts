@@ -1,16 +1,6 @@
 import { Direction } from "./direction.js";
 import * as view from "./view.js";
-import { GameModel as SnakeGameModel, Model } from "./model.js";
-// const R = 10, // straal van een element
-//   STEP = 2 * R, // stapgrootte
-//   // er moet gelden: WIDTH = HEIGHT
-//   NUMFOODS = 15, // aantal voedselelementen
-//   XMIN = R, // minimale x waarde
-//   YMIN = R, // minimale y waarde
-//   SLEEPTIME = 500, // aantal milliseconde voor de timer
-//   SNAKE = "DarkRed", // kleur van een slangsegment
-//   FOOD = "Olive", // kleur van voedsel
-//   HEAD = "DarkOrange"; // kleur van de kop van de slang
+import * as model from "./model.js";
 
 // let snake: Snake;
 // const foods: Food[] = []; // voedsel voor de slang
@@ -19,7 +9,7 @@ import { GameModel as SnakeGameModel, Model } from "./model.js";
 // let xMax: number; // maximale waarde van x = width - R
 // let yMax: number; // maximale waarde van y = height - R
 // let direction = Direction.Up;
-let model: Model;
+let gameModel: model.GameModel;
 
 export class Presenter {
   constructor() {
@@ -32,8 +22,8 @@ export class Presenter {
   @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
 */
 const init = () => {
-  model = new SnakeGameModel();
-  view.drawModelOnCanvas(model);
+  gameModel = model.newGame();
+  view.drawModelOnCanvas(gameModel);
 };
 
 // /**
