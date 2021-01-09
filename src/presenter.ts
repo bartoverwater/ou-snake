@@ -37,7 +37,7 @@ const changeDirection = (newDirection: Direction) => {
 };
 
 export class Presenter {
-  constructor() {
+  load(): void {
     view.onStartButtonClicked(init);
   }
 }

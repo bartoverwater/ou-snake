@@ -5,8 +5,10 @@
   "main": "output/index.js",
   "scripts": {
     "build": "npx tsc",
+    "start": "http-server ./output",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"tsc --watch\" \"http-server ./output -c-1 \""
+    "dev": "concurrently \"npx tsc --watch\" \"http-server ./output -c-1 \"",
+    "clean": "rm -f ./output/*.js"
   },
   "author": "",
   "license": "ISC",
