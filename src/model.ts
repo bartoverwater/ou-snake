@@ -12,7 +12,7 @@ export interface Point {
   y: number;
 }
 
-export let gameModel: GameModel;
+export let gameModel: SnakeGameModel;
 export let gameOver = false;
 
 export function newGame(): void {
@@ -21,7 +21,7 @@ export function newGame(): void {
 
 //todo create move functions
 export function changeDirection(newDirection: Direction) {
-  //todo implement
+  gameModel.direction = newDirection;
 }
 
 export function moveSnake(): GameModel {
@@ -83,10 +83,10 @@ class SnakeGameModel implements GameModel {
       },
     ];
   }
-
+//botsing met rand?
   pointCollides(other: Point): boolean {
-    const collides = (element: Point): boolean =>
-      other.x === element.x && other.y === element.y;
+    function collides(element: Point): boolean {
+      return other.x === element.x && other.y === element.y;}
     return this.food.some(collides) || this.snake.some(collides);
   }
 }
