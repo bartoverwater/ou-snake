@@ -4,8 +4,6 @@ export default {
   ELEMENT_RADIUS: R, //Straal van een element
   STEP: 2 * R,
   NUM_FOODS: 5,
-  XMIN: R,
-  YMIN: R,
   SLEEPTIME: 500,
 
   //colors

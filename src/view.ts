@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Direction } from "./direction.js";
 import { GameModel, Point } from "./model.js";
+import settings from "./game-settings.js";
 
 const canvas = document.getElementById("mySnakeCanvas")! as HTMLCanvasElement;
 const canvasContext = canvas.getContext("2d")!;
 
-export function onStartButtonClicked(onStartFunction: () => void): void {
+export function onStartButtonClicked(
+  onStartFunction: (width: number, height: number) => void
+): void {
   document
     .getElementById("startSnake")!
-    .addEventListener("click", () => onStartFunction());
+    .addEventListener("click", () =>
+      onStartFunction(canvas.width, canvas.height)
+    );
 }
 
 export function drawModelOnCanvas(model: GameModel): void {
@@ -26,6 +31,9 @@ export function onDirectionChanged(
 }
 
 const drawPoint = (point: Point): void => {
+  const circle = new Path2D();
+  circle.arc(point.x, point.y, settings.ELEMENT_RADIUS, 0, 2 * Math.PI, false);
   canvasContext.fillStyle = point.color;
-  canvasContext.fillRect(point.x, point.y, 10, 10);
+  canvasContext.fill(circle);
+  canvasContext.stroke(circle);
 };

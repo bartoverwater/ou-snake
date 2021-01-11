@@ -15,8 +15,8 @@ import settings from "./game-settings.js";
   @function init() -> void
   @desc Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles
 */
-const init = () => {
-  model.newGame();
+const init = (width: number, height: number) => {
+  model.newGame(width, height);
   view.onDirectionChanged(changeDirection);
   eventLoop();
 };

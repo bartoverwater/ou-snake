@@ -15,8 +15,8 @@ export interface Point {
 export let gameModel: SnakeGameModel;
 export let gameOver = false;
 
-export function newGame(): void {
-  gameModel = new SnakeGameModel();
+export function newGame(width: number, height: number): void {
+  gameModel = new SnakeGameModel(width, height);
 }
 
 //todo create move functions
@@ -34,8 +34,12 @@ class SnakeGameModel implements GameModel {
   food: Point[] = [];
   snake: Point[];
   direction: Direction = Direction.Up;
+  width;
+  height;
 
-  constructor() {
+  constructor(width: number, height: number) {
+    this.width = width;
+    this.height = height;
     this.food = this.createFoods(5);
     this.snake = this.createStartSnake();
   }
@@ -57,29 +61,28 @@ class SnakeGameModel implements GameModel {
   createFood(): Point {
     return {
       color: settings.COLORS.FOOD,
-      x: getRandomInt(0 + 10, 360 - 10),
-      y: getRandomInt(0 + 10, 360 - 10),
+      x: getRandomInt(
+        settings.ELEMENT_RADIUS,
+        this.width - settings.ELEMENT_RADIUS
+      ),
+      y: getRandomInt(
+        settings.ELEMENT_RADIUS,
+        this.height - settings.ELEMENT_RADIUS
+      ),
     };
   }
 
   createStartSnake(): Point[] {
     return [
-      //width and R
-      { color: settings.COLORS.SNAKE_HEAD, x: 360 / 2, y: 360 / 2 },
       {
         color: settings.COLORS.SNAKE_BODY,
-        x: 360 / 2,
-        y: 360 / 2 + settings.ELEMENT_RADIUS,
+        x: settings.ELEMENT_RADIUS + this.width / 2,
+        y: settings.ELEMENT_RADIUS + this.height / 2,
       },
       {
-        color: settings.COLORS.SNAKE_BODY,
-        x: 360 / 2,
-        y: 360 / 2 + settings.ELEMENT_RADIUS * 2,
-      },
-      {
-        color: settings.COLORS.SNAKE_BODY,
-        x: 360 / 2,
-        y: 360 / 2 + settings.ELEMENT_RADIUS * 3,
+        color: settings.COLORS.SNAKE_HEAD,
+        x: settings.ELEMENT_RADIUS + this.width / 2,
+        y: this.height / 2 - settings.ELEMENT_RADIUS,
       },
     ];
   }
