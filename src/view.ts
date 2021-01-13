@@ -18,7 +18,7 @@ const canvasContext: CanvasRenderingContext2D = canvas.getContext("2d")!;
  * Gets the startSnake button from the DOM and adds onStartFunction to the Click Event Listener.
  *
  * @export
- * @param {function(number, number): void} onStartFunction
+ * @param {function(number, number): void} onStartFunction The function to call when the start button is clicked.
  */
 export function onStartButtonClicked(
   onStartFunction: (width: number, height: number) => void
