@@ -1,86 +1,151 @@
-* {
-	margin: 0;
-}
-ul {
-	padding-left: 0;
-}
+/*** Generiek ***/
 
-/* HEADER */
-
-.headerbalk {
-	text-align: center;
-	background-color: DarkGreen;
-	color: #FFF;
-	padding: 0.25em;
-	font-weight: 900;
-	font-size: 1.5em;
+body {
+  background: Ivory;
+  font-family: Arial;
+  min-height: 60em;
+  background: radial-gradient(circle, blue, salmon);
 }
 
-/* NAVIGATION */
-.navigatiebalk {
-	float: left;
-	border: 1px solid #000;
-	margin: 2em 2em;
-	background-color: Gray;
-	border-radius: 0.5em;
+/*** Hoofdstructuur ***/
+
+.page {
+  min-height: 58em;
+  margin: 1em auto;
+  background-color: Ivory;
+  padding: 0.25em 1em;
+  box-shadow: 3px 3px 5px purple;
+  border-radius: 0.25em;
 }
 
-.navheader {
-	margin: 1em;
-	text-align: center;
-	font-size: 1.5em;
-	color: #FFF;
+main {
+  display: flex;
 }
 
-.menuitem {
-	list-style: none;
-	color: #fff;
+.pagetitle {
+  padding: 0.25em;
+  margin: 0.25em 0;
+  text-align: center;
+  font-size: 4em;
+  color: Ivory;
+  border: thin solid purple;
+  border-radius: 0.25em;
+  box-shadow: 3px 3px 5px purple;
+  background: radial-gradient(circle, salmon, blue, salmon);
 }
 
-.menuitemlink {
-	color: inherit;
-	text-decoration: inherit;
-	display: block;
-	background-color: DarkGreen;
-	padding: 0.35em;
-	margin: 0.5em;
-	border-radius: 0.5em;
+.navbar {
+  min-width: 14em;
+  padding: 1em;
+  margin-top: 3em;
+  margin-right: 1em;
+  border: thin solid purple;
+  border-radius: 0.25em;
+  background: radial-gradient(circle, blue, salmon);
+  box-shadow: 3px 3px 5px purple;
 }
 
-.menuitemlink:hover {
-	transform: scale(1.1);
+article {
+  text-align: center;
+  flex-grow: 2;
+  padding: 0 6em;
+  margin: 1em 0.25em 0 0.25em;
 }
 
-/* CONTENT */
-.contentpage {
-	text-align: center;
-	font-size: 1.75em;
-	padding: 0.5em;
+@media (max-width: 1024px) {
+  main {
+    flex-direction: column;
+  }
+
+  .navbar {
+    flex-direction: row;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .menuopties {
+    flex-direction: row;
+    padding: 0;
+  }
 }
 
-.contentpage p, h1 {
-	padding: 0.25em;
+#mySnakeCanvas {
+  padding: 0;
+  margin: auto;
+  display: block;
+  border: thin solid purple;
+  border-radius: 0.25em;
+  box-shadow: 3px 3px 5px purple;
+}
+
+/*** Onderdelen menu en andere details ***/
+
+.menuopties {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.sectiontitle,
+.menutitle {
+  font-variant: small;
+  color: purple;
+  padding: 0.5em 0;
+  margin: 0.5em 0;
+  text-align: center;
+}
+
+.menutitle {
+  color: Ivory;
 }
 
 .buttons {
-	text-align: center;
+  margin: 0.25em auto;
+  width: 14em;
+  padding: 0em 4em;
 }
 
-@media screen and (max-width: 768px) {
-	.buttons {
-		clear: left;
-	}
+button {
+  font-size: large;
+  margin: auto;
+  display: inline;
+  color: Ivory;
+  background: linear-gradient(purple, salmon);
+  border: thin solid purple;
+  border-radius: 0.75em;
+  outline: none;
+}
+button:hover,
+a:hover {
+  background: salmon;
 }
 
-.button {
-	background-color: DarkGreen;
-	color: #FFF;
-	padding: 0.25em 1em;
-	margin: 1em 1em;
+li {
+  border: thin solid Ivory;
+  border-radius: 0.25em;
+  list-style-type: none;
+  background: Ivory;
+  font-size: large;
+  padding: 0.5em 0.5em;
+  margin: 0.5em 0;
 }
 
-.gamecanvas {
-	border: 1px solid #000;
-	display: block;
-	margin: 0 auto;
+a {
+  color: purple;
+  text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .menuopties {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .menutitle {
+    display: none;
+  }
+
+  li {
+    margin: 0.25em 0.25em;
+  }
 }

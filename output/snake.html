@@ -1,35 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Mijn spelletjes site.</title>
-    <link rel="Stylesheet" href="stijl.css" />
+<html lang="nl">
+  <head>
+    <title>Mijn Spelletjessite-Snake</title>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Onderdeel Snake van de spelletjessite" />
+    <meta name="author" content="Albert Huisman" />
+    <link rel="reset" href="reset.css" />
+    <link rel="stylesheet" href="stijl.css" />
     <script src="index.js" type="module"></script>
-</head>
-<body>
- <header class="headerbalk">
-   Mijn Spelletjes Site
- </header>
- <nav class="navigatiebalk">
-    <div class="navheader">Mijn Spelletjes</div> 
-    <ul>
-      <li class="menuitem"><a class="menuitemlink" href="./index.html">Welkom</a></li>
-      <li class="menuitem"><a class="menuitemlink" href="#">Inloggen</a></li>
-      <li class="menuitem"><a class="menuitemlink" href="./snake.html">Snake</a></li>
-      <li class="menuitem"><a class="menuitemlink" href="#">Boter-kaas-eieren</a></li>
-      <li class="menuitem"><a class="menuitemlink" href="#">Sudoku</a></li>
-      <li class="menuitem"><a class="menuitemlink" href="#">Master Mind</a></li>
-      <li class="menuitem"><a class="menuitemlink" href="#">Galgje</a></li>
-      <li class="menuitem"><a class="menuitemlink" href="#">Cryptogramm</a></li>
-    </ul>
- </nav>
- <article class="contentpage">
-   <h1>Snake</h1>
-    <div class="buttons">
-      <button class="button" id="startSnake">Start</button>
-      <button class="button" id="stopSnake">Stop</button> 
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <h1 class="pagetitle">Mijn Spelletjessite</h1>
+      </header>
+      <main>
+        <nav class="navbar">
+          <h2 class="menutitle">Mijn Spelletjes</h2>
+          <ul class="menuopties">
+            <a href="index.html"><li>Welkom</li></a>
+            <a href=""><li>Inloggen</li></a>
+            <a href="snake.html"><li class="active">Snake</li></a>
+            <a href=""><li>Boter-kaas-eieren</li></a>
+            <a href=""><li>Sudoku</li></a>
+            <a href=""><li>Mastermind</li></a>
+            <a href=""><li>Galgje</li></a>
+            <a href=""><li>Cryptogrammen</li></a>
+          </ul>
+        </nav>
+        <article>
+          <h2 class="sectiontitle">Snake</h2>
+          <div class="buttons">
+            <button id="startSnake" type="button">Start</button>
+            <button id="stopSnake" type="button">Stop</button>
+          </div>
+          <canvas id="mySnakeCanvas" width="360" height="360"></canvas>
+        </article>
+      </main>
     </div>
-    <canvas class="gamecanvas" id="mySnakeCanvas" width="360" height="360"></canvas>
- </article>
-</body>
+  </body>
 </html>
