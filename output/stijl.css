@@ -1,10 +1,19 @@
 /*** Generiek ***/
 
+:root {
+  --primary-bg-radiant: radial-gradient(circle, blue, salmon);
+  --alt-bg-radiant: radial-gradient(circle, salmon, blue, salmon);
+  --btn-bg-radiant: linear-gradient(purple, salmon);
+  --primary-color: Purple;
+  --secondary-color: Ivory;
+  --btn-hover-color: rgb(221, 218, 218);
+}
+
 body {
-  background: Ivory;
+  background: var(--secondary-color);
   font-family: Arial;
   min-height: 60em;
-  background: radial-gradient(circle, blue, salmon);
+  background: var(--primary-bg-radiant);
 }
 
 /*** Hoofdstructuur ***/
@@ -12,9 +21,9 @@ body {
 .page {
   min-height: 58em;
   margin: 1em auto;
-  background-color: Ivory;
+  background-color: var(--secondary-color);
   padding: 0.25em 1em;
-  box-shadow: 3px 3px 5px purple;
+  box-shadow: 3px 3px 5px var(--primary-color);
   border-radius: 0.25em;
 }
 
@@ -27,11 +36,11 @@ main {
   margin: 0.25em 0;
   text-align: center;
   font-size: 4em;
-  color: Ivory;
-  border: thin solid purple;
+  color: var(--secondary-color);
+  border: thin solid var(--primary-color);
   border-radius: 0.25em;
-  box-shadow: 3px 3px 5px purple;
-  background: radial-gradient(circle, salmon, blue, salmon);
+  box-shadow: 3px 3px 5px var(--primary-color);
+  background: var(--alt-bg-radiant);
 }
 
 .navbar {
@@ -39,10 +48,10 @@ main {
   padding: 1em;
   margin-top: 3em;
   margin-right: 1em;
-  border: thin solid purple;
+  border: thin solid var(--primary-color);
   border-radius: 0.25em;
-  background: radial-gradient(circle, blue, salmon);
-  box-shadow: 3px 3px 5px purple;
+  background: var(--primary-bg-radiant);
+  box-shadow: 3px 3px 5px var(--primary-color);
 }
 
 article {
@@ -62,20 +71,15 @@ article {
     margin-top: 0;
     padding: 0;
   }
-
-  .menuopties {
-    flex-direction: row;
-    padding: 0;
-  }
 }
 
-#mySnakeCanvas {
+canvas {
   padding: 0;
   margin: auto;
   display: block;
-  border: thin solid purple;
+  border: thin solid var(--primary-color);
   border-radius: 0.25em;
-  box-shadow: 3px 3px 5px purple;
+  box-shadow: 3px 3px 5px var(--primary-color);
 }
 
 /*** Onderdelen menu en andere details ***/
@@ -88,52 +92,51 @@ article {
 
 .sectiontitle,
 .menutitle {
-  font-variant: small;
-  color: purple;
+  color: var(--primary-color);
   padding: 0.5em 0;
   margin: 0.5em 0;
   text-align: center;
 }
 
 .menutitle {
-  color: Ivory;
+  color: var(--secondary-color);
 }
 
 .buttons {
   margin: 0.25em auto;
   width: 14em;
-  padding: 0em 4em;
+  padding: 0 4em;
 }
 
 button {
   font-size: large;
-  margin: auto;
-  display: inline;
-  color: Ivory;
-  background: linear-gradient(purple, salmon);
-  border: thin solid purple;
+  color: var(--secondary-color);
+  background: var(--btn-bg-radiant);
+  border: thin solid var(--primary-color);
   border-radius: 0.75em;
-  outline: none;
 }
+
 button:hover,
 li:hover {
-  background-color: rgb(221, 218, 218);
-  border-color: rgb(221, 218, 218);
+  outline: none;
+  background-color: var(--btn-hover-color);
+  border-color: var(--btn-hover-color);
 }
 
 li {
-  border: thin solid Ivory;
-  border-radius: 0.25em;
-  list-style-type: none;
-  background: Ivory;
-  font-size: large;
-  padding: 0.5em 0.5em;
-  margin: 0.5em 0;
+  list-style: none;
+  margin: 0.25em 0.25em;
 }
 
-a {
-  color: purple;
+li > a {
+  display: inline-block;
+  border: thin solid var(--secondary-color);
+  color: var(--primary-color);
   text-decoration: none;
+  border-radius: 0.25em;
+  background: var(--secondary-color);
+  font-size: large;
+  padding: 0.5em 0.5em;
 }
 
 @media (max-width: 1024px) {
@@ -145,8 +148,10 @@ a {
   .menutitle {
     display: none;
   }
+}
 
-  li {
-    margin: 0.25em 0.25em;
+@media (min-width: 1025px) {
+  li > a {
+    width: 90%;
   }
 }
