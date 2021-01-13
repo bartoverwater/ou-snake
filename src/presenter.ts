@@ -13,16 +13,16 @@ import settings from "./game-settings.js";
  * @param {number} width De width van het speelveld
  * @param {number} height De height van het speelveld
  */
-const init = (width: number, height: number) => {
+function init(width: number, height: number) {
   model.newGame(width, height);
   view.onDirectionChanged(changeDirection);
   eventLoop();
-};
+}
 
 /**
  * Starts the event loop. The timeout number of seconds can be set in the game-settings.
  */
-const eventLoop = (): void => {
+function eventLoop(): void {
   if (model.gameOver) {
     return;
   }
@@ -31,16 +31,16 @@ const eventLoop = (): void => {
     view.drawModelOnCanvas(model.gameModel);
     eventLoop();
   }, settings.SLEEPTIME);
-};
+}
 
 /**
  * A function to pass the new direction from the view to the model.
  *
  * @param {Direction} newDirection
  */
-const changeDirection = (newDirection: Direction) => {
+function changeDirection(newDirection: Direction) {
   model.changeDirection(newDirection);
-};
+}
 
 /**
  * Main presenter class, used to initialize the code.
