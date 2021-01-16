@@ -119,6 +119,7 @@ button {
   background: var(--btn-bg-radiant);
   border: thin solid var(--primary-color);
   border-radius: 0.75em;
+  outline: none;
 }
 
 button:hover,

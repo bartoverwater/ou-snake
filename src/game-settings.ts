@@ -8,8 +8,8 @@ export default {
 
   //colors
   COLORS: {
-    SNAKE_BODY: "DarkRed",
-    FOOD: "Olive",
-    SNAKE_HEAD: "DarkOrange",
+    SNAKE_BODY: "Blue",
+    FOOD: "Green",
+    SNAKE_HEAD: "Orange",
   },
 };
