@@ -55,6 +55,21 @@ export function drawModelOnCanvas(model: GameModel): void {
 }
 
 /**
+* Clears the canvas when the game is stopped
+* @export
+*/
+export function drawEmptyCanvas(model: GameModel): void {
+  while (model.snake.length) {
+    model.snake.pop();
+  }
+  while (model.food.length) {
+    model.food.pop();
+  }
+  model.gameOver = true;
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+/**
  * Adds the given changeDirFunction to the document "keydown" event listener.
  *
  * @export

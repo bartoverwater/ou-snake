@@ -43,6 +43,14 @@ function changeDirection(newDirection: Direction): void {
 }
 
 /**
+@function stop() -> void
+@desc Laat slang en voedsel verdwijnen, en teken leeg veld
+*/
+function stop() {
+  view.drawEmptyCanvas(model.gameModel);
+}
+
+/**
  * Main presenter class, used to initialize the code.
  *
  * @export
@@ -56,5 +64,6 @@ export class Presenter {
    */
   load(): void {
     view.onStartButtonClicked(init);
+    view.onStopButtonClicked(stop);
   }
 }
