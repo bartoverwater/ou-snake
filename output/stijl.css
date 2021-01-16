@@ -6,7 +6,8 @@
   --btn-bg-radiant: linear-gradient(purple, salmon);
   --primary-color: Purple;
   --secondary-color: Ivory;
-  --btn-hover-color: rgb(221, 218, 218);
+  --btn-hover-color: salmon;
+  /*--btn-hover-color: rgb(221, 218, 218);*/
 }
 
 body {
@@ -84,6 +85,10 @@ canvas {
 
 /*** Onderdelen menu en andere details ***/
 
+/* Is het niet een beetje dubbelop (en onlogisch?) om r70 het menu op flex-row te zetten,
+in r93 de menuopties op flex te zetten, met de menuopties op column
+en verderop (r146) nog een keer, maar dan weer op row? */
+
 .menuopties {
   display: flex;
   flex-direction: column;
@@ -117,10 +122,11 @@ button {
 }
 
 button:hover,
-li:hover {
+/*li:hover deze hover lijkt overbodig? */
+a:hover {
   outline: none;
-  background-color: var(--btn-hover-color);
-  border-color: var(--btn-hover-color);
+  background: var(--btn-hover-color);
+  border: var(--btn-hover-color);
 }
 
 li {
@@ -150,7 +156,7 @@ li > a {
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1024px) {
   li > a {
     width: 90%;
   }
