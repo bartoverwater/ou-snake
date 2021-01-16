@@ -64,7 +64,25 @@ export function onDirectionChanged(
   changeDirFunction: (newDirection: Direction) => void
 ): void {
   document.addEventListener("keydown", (event) => {
-    changeDirFunction(<Direction>event.key);
+    let dir;
+    switch (event.key) {
+      case "ArrowDown":
+        dir = Direction.Down;
+        break;
+      case "ArrowUp":
+        dir = Direction.Up;
+        break;
+      case "ArrowLeft":
+        dir = Direction.Left;
+        break;
+      case "ArrowRight":
+        dir = Direction.Right;
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+    changeDirFunction(dir);
   });
 }
 

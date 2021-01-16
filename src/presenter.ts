@@ -38,7 +38,7 @@ function eventLoop(): void {
  *
  * @param {Direction} newDirection
  */
-function changeDirection(newDirection: Direction) {
+function changeDirection(newDirection: Direction): void {
   model.changeDirection(newDirection);
 }
 
