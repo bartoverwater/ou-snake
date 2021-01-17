@@ -2,6 +2,7 @@
 import { Direction } from "./direction.js";
 import { GameModel, Point } from "./model.js";
 import settings from "./game-settings.js";
+import gameSettings from "./game-settings.js";
 /** @module View */
 /**
  * The Html Canvas Element
@@ -30,6 +31,14 @@ export function onStartButtonClicked(
     );
 }
 
+export function showGameOver(gameOver: boolean): void {
+  const gameOverDiv = document.getElementById("gameover")!;
+  gameOverDiv.style.visibility =
+    gameOver && gameOverDiv.style.visibility === "hidden"
+      ? "visible"
+      : "hidden";
+}
+
 /**
  * Gets the stopSnake button from the DOM and adds the onStopFunction to the Click Event Listener.
  *
@@ -52,21 +61,6 @@ export function drawModelOnCanvas(model: GameModel): void {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
   model.snake.forEach(drawPoint);
   model.food.forEach(drawPoint);
-}
-
-/**
-* Clears the canvas when the game is stopped
-* @export
-*/
-export function drawEmptyCanvas(model: GameModel): void {
-  while (model.snake.length) {
-    model.snake.pop();
-  }
-  while (model.food.length) {
-    model.food.pop();
-  }
-  model.gameOver = true;
-  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 /**

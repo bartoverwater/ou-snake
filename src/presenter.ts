@@ -14,20 +14,34 @@ import settings from "./game-settings.js";
  * @param {number} height De height van het speelveld
  */
 function init(width: number, height: number) {
+  if (timeOut != undefined) {
+    clearTimeout(timeOut);
+  }
+  view.showGameOver(false);
   model.newGame(width, height);
   view.onDirectionChanged(changeDirection);
+  direction = Direction.Up;
   eventLoop();
 }
+
+let timeOut: number | null = null;
+let direction: Direction;
+let lastDirectionPressed: Direction | null = null;
 
 /**
  * Starts the event loop. The timeout number of seconds can be set in the game-settings.
  */
 function eventLoop(): void {
   if (model.gameOver) {
+    view.showGameOver(true);
     return;
   }
-  setTimeout(() => {
-    model.moveSnake();
+  timeOut = setTimeout(() => {
+    if (lastDirectionPressed != null) {
+      direction = lastDirectionPressed;
+    }
+    model.moveSnake(direction);
+    lastDirectionPressed = null;
     view.drawModelOnCanvas(model.gameModel);
     eventLoop();
   }, settings.SLEEPTIME);
@@ -39,15 +53,22 @@ function eventLoop(): void {
  * @param {Direction} newDirection
  */
 function changeDirection(newDirection: Direction): void {
-  model.changeDirection(newDirection);
+  if (
+    (newDirection === Direction.Left && direction !== Direction.Right) ||
+    (newDirection === Direction.Right && direction !== Direction.Left) ||
+    (newDirection === Direction.Up && direction !== Direction.Down) ||
+    (newDirection === Direction.Down && direction !== Direction.Up)
+  ) {
+    lastDirectionPressed = newDirection;
+  }
 }
 
 /**
 @function stop() -> void
 @desc Laat slang en voedsel verdwijnen, en teken leeg veld
 */
-function stop() {
-  view.drawEmptyCanvas(model.gameModel);
+function stop(): void {
+  model.setGameOver(true);
 }
 
 /**

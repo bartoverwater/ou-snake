@@ -1,6 +1,4 @@
-/* eslint-disable no-case-declarations */
 import { Direction } from "./direction.js";
-import gameSettings from "./game-settings.js";
 import settings from "./game-settings.js";
 
 export interface GameModel {
@@ -8,98 +6,109 @@ export interface GameModel {
   snake: Point[];
 }
 
-export interface Point {
+export class Point {
   color: string;
   x: number;
   y: number;
+
+  constructor(color: string, x: number, y: number) {
+    this.color = color;
+    this.x = x;
+    this.y = y;
+  }
+
+  collidesWith(other: Point): boolean {
+    return this.x === other.x && this.y === other.y;
+  }
 }
 
 export let gameModel: SnakeGameModel;
 export let gameOver = false;
 
+export function setGameOver(isGameOver: boolean): void {
+  gameOver = isGameOver;
+}
+
 export function newGame(width: number, height: number): void {
+  gameOver = false;
   gameModel = new SnakeGameModel(width, height);
 }
 
-//todo create move functions
-export function changeDirection(newDirection: Direction): void {
-  if (
-    (newDirection === Direction.Left &&
-      gameModel.direction !== Direction.Right) ||
-    (newDirection === Direction.Right &&
-      gameModel.direction !== Direction.Left) ||
-    (newDirection === Direction.Up && gameModel.direction !== Direction.Down) ||
-    (newDirection === Direction.Down && gameModel.direction !== Direction.Up)
-  ) {
-    gameModel.direction = newDirection;
-  }
-}
-
-export function moveSnake(): GameModel {
-  const lastElement = gameModel.snake[gameModel.snake.length - 1];
-  const newElement = {
-    color: settings.COLORS.SNAKE_HEAD,
-    x: lastElement.x,
-    y: lastElement.y,
-  };
-
-  switch (gameModel.direction) {
+export function moveSnake(direction: Direction): GameModel {
+  const head = gameModel.snake[gameModel.snake.length - 1];
+  let newX = head.x;
+  let newY = head.y;
+  switch (direction) {
     case Direction.Up:
-      let newY = lastElement.y;
-      newY = lastElement.y - settings.ELEMENT_RADIUS * 2;
-      if (newY <= 0) {
-        newY = gameModel.height;
-      }
-      move({ ...newElement, y: newY }, lastElement);
+      newY = head.y - settings.STEP;
       break;
     case Direction.Down:
-      let newY2 = lastElement.y + settings.ELEMENT_RADIUS * 2;
-      if (newY2 >= gameModel.height) {
-        newY2 = 0;
-      }
-      move({ ...newElement, y: newY2 }, lastElement);
+      newY = head.y + settings.STEP;
       break;
     case Direction.Left:
-      let newX = lastElement.x - settings.ELEMENT_RADIUS * 2;
-      if (newX <= 0) {
-        newX = gameModel.width;
-      }
-      move({ ...newElement, x: newX }, lastElement);
+      newX = head.x - settings.STEP;
       break;
     case Direction.Right:
-      let newX2 = lastElement.x + settings.ELEMENT_RADIUS * 2;
-      if (newX2 >= gameModel.width) {
-        newX2 = 0;
-      }
-      move({ ...newElement, x: newX2 }, lastElement);
+      newX = head.x + settings.STEP;
       break;
+  }
+
+  const newPosition = new Point(head.color, newX, newY);
+
+  if (
+    gameModel.snake.some((snakeElement) =>
+      snakeElement.collidesWith(newPosition)
+    )
+  ) {
+    gameOver = true;
+  } else {
+    move(checkOutOfBounds(newPosition), head);
   }
   return gameModel;
 }
 
-function move(newElement: Point, lastElement: Point) {
-  lastElement.color = settings.COLORS.SNAKE_BODY;
+function checkOutOfBounds(point: Point): Point {
+  const correctedPoint = new Point(point.color, point.x, point.y);
+  if (correctedPoint.x <= 0) {
+    correctedPoint.x = gameModel.width - settings.STEP;
+  } else if (correctedPoint.x >= gameModel.width) {
+    correctedPoint.x = 0 + settings.STEP;
+  }
+  if (correctedPoint.y < 0 + settings.ELEMENT_RADIUS) {
+    correctedPoint.y = gameModel.height - settings.STEP;
+  } else if (correctedPoint.y > gameModel.height - settings.ELEMENT_RADIUS) {
+    correctedPoint.y = 0 + settings.STEP;
+  }
+  return correctedPoint;
+}
+
+function move(newElement: Point, oldHead: Point) {
+  oldHead.color = settings.COLORS.SNAKE_BODY;
   gameModel.snake.push(newElement);
-  if (!pointCollides(lastElement, gameModel.food)) {
+  if (!gameModel.food.some((food) => food.collidesWith(oldHead))) {
     gameModel.snake.shift();
   } else {
     gameModel.food = gameModel.food.filter(
-      (element) => !collides(lastElement, element)
+      (element) => !element.collidesWith(oldHead)
     );
   }
 }
 
 class SnakeGameModel implements GameModel {
   food: Point[] = [];
-  snake: Point[];
+  snake: Point[] = [];
   direction: Direction = Direction.Up;
+  maxWidth;
+  maxHeight;
   width;
   height;
 
   constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
-    this.food = this.createFoods(5);
+    this.maxWidth = width - settings.STEP;
+    this.maxHeight = height - settings.STEP;
+    this.food = this.createFoods(settings.NUM_FOODS);
     this.snake = this.createStartSnake();
   }
 
@@ -111,58 +120,44 @@ class SnakeGameModel implements GameModel {
   createFoods(amount: number): Point[] {
     const newFoods = [];
     for (let i = 0; i < amount; i++) {
-      newFoods.push(this.createFood());
+      let newFood = this.createFood();
+      while (
+        this.food.some((food) => food.collidesWith(newFood)) ||
+        this.snake.some((snake) => snake.collidesWith(newFood))
+      ) {
+        newFood = this.createFood();
+      }
+      console.log(newFood);
+      newFoods.push(newFood);
     }
     return [...this.food, ...newFoods];
   }
 
   //todo Prevent collision with pointCollides function
   createFood(): Point {
-    return {
-      color: settings.COLORS.FOOD,
-      x: roundToNearest(
-        getRandomInt(
-          settings.ELEMENT_RADIUS,
-          this.width - settings.ELEMENT_RADIUS
-        )
+    return new Point(
+      settings.COLORS.FOOD,
+      roundToNearestGridCell(
+        getRandomInt(settings.MIN_WIDTH_HEIGHT, this.maxWidth)
       ),
-      y: roundToNearest(
-        getRandomInt(
-          settings.ELEMENT_RADIUS,
-          this.height - settings.ELEMENT_RADIUS
-        )
-      ),
-    };
+      roundToNearestGridCell(
+        getRandomInt(settings.MIN_WIDTH_HEIGHT, this.maxHeight)
+      )
+    );
   }
 
   createStartSnake(): Point[] {
+    const startingWidth = this.width / 2;
+    const startingHeight = this.height / 2;
     return [
-      {
-        color: settings.COLORS.SNAKE_BODY,
-        x: 170,
-        y: 170,
-      },
-      {
-        color: settings.COLORS.SNAKE_HEAD,
-        x: 170,
-        y: 190,
-      },
+      new Point(settings.COLORS.SNAKE_BODY, startingWidth, startingHeight),
+      new Point(
+        settings.COLORS.SNAKE_HEAD,
+        startingWidth,
+        startingHeight - settings.STEP
+      ),
     ];
   }
-}
-
-function collides(element: Point, other: Point): boolean {
-  return (
-    (other.x > element.x - settings.ELEMENT_RADIUS ||
-      other.x < element.x + settings.ELEMENT_RADIUS) &&
-    (other.y > element.y - settings.ELEMENT_RADIUS ||
-      other.y < element.y + settings.ELEMENT_RADIUS)
-  );
-}
-
-//botsing met rand?
-function pointCollides(pointToCompare: Point, elements: Point[]): boolean {
-  return elements.some((element) => collides(element, pointToCompare));
 }
 
 /**
@@ -172,10 +167,10 @@ function pointCollides(pointToCompare: Point, elements: Point[]): boolean {
   @param {number} max een geheel getal als bovenste grenswaarde (max > min)
   @return {number} een random geheel getal x waarvoor geldt: min <= x <= max
 */
-function getRandomInt(min: number, max: number) {
+function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function roundToNearest(number: number): number {
-  return Math.floor(number / settings.ELEMENT_RADIUS) * settings.ELEMENT_RADIUS;
+function roundToNearestGridCell(number: number): number {
+  return Math.ceil(number / settings.STEP) * settings.STEP;
 }

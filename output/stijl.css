@@ -162,3 +162,7 @@ li > a {
     width: 90%;
   }
 }
+
+#gameover {
+  visibility: hidden;
+}

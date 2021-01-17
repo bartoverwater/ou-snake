@@ -3,8 +3,9 @@ const R = 10;
 export default {
   ELEMENT_RADIUS: R, //Straal van een element
   STEP: 2 * R,
-  NUM_FOODS: 5,
+  NUM_FOODS: 20,
   SLEEPTIME: 500,
+  MIN_WIDTH_HEIGHT: 0 + R,
 
   //colors
   COLORS: {
