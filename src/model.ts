@@ -79,6 +79,7 @@ function checkOutOfBounds(point: Point): Point {
   } else if (correctedPoint.y > gameModel.height - settings.ELEMENT_RADIUS) {
     correctedPoint.y = 0 + settings.STEP;
   }
+  console.log(correctedPoint);
   return correctedPoint;
 }
 
@@ -97,7 +98,6 @@ function move(newElement: Point, oldHead: Point) {
 class SnakeGameModel implements GameModel {
   food: Point[] = [];
   snake: Point[] = [];
-  direction: Direction = Direction.Up;
   maxWidth;
   maxHeight;
   width;
@@ -130,7 +130,7 @@ class SnakeGameModel implements GameModel {
       console.log(newFood);
       newFoods.push(newFood);
     }
-    return [...this.food, ...newFoods];
+    return newFoods;
   }
 
   //todo Prevent collision with pointCollides function
@@ -138,23 +138,23 @@ class SnakeGameModel implements GameModel {
     return new Point(
       settings.COLORS.FOOD,
       roundToNearestGridCell(
-        getRandomInt(settings.MIN_WIDTH_HEIGHT, this.maxWidth)
+        getRandomInt(10 + settings.MIN_WIDTH_HEIGHT, this.maxWidth)
       ),
       roundToNearestGridCell(
-        getRandomInt(settings.MIN_WIDTH_HEIGHT, this.maxHeight)
+        getRandomInt(10 + settings.MIN_WIDTH_HEIGHT, this.maxHeight)
       )
     );
   }
 
   createStartSnake(): Point[] {
-    const startingWidth = this.width / 2;
-    const startingHeight = this.height / 2;
+    const startingWidth = settings.ELEMENT_RADIUS + this.width / 2;
+    const startingHeight = settings.ELEMENT_RADIUS + this.height / 2;
     return [
       new Point(settings.COLORS.SNAKE_BODY, startingWidth, startingHeight),
       new Point(
         settings.COLORS.SNAKE_HEAD,
         startingWidth,
-        startingHeight - settings.STEP
+        this.height / 2 - settings.ELEMENT_RADIUS
       ),
     ];
   }
