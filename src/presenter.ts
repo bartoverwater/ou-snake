@@ -1,12 +1,12 @@
 import { Direction } from "./direction.js";
 import * as view from "./view.js";
-import * as model from "./model.js";
+import { GameModel, newModel } from "./model.js";
 import settings from "./game-settings.js";
 
 /**
  * @module Presenter
  */
-
+let model: GameModel | null;
 /**
  * Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles.
  *
@@ -18,7 +18,7 @@ function init(width: number, height: number) {
     clearTimeout(timeOut);
   }
   view.showGameOver(false);
-  model.newGame(width, height);
+  model = newModel(width, height);
   view.onDirectionChanged(changeDirection);
   direction = Direction.Up;
   eventLoop();
@@ -32,7 +32,7 @@ let lastDirectionPressed: Direction | null = null;
  * Starts the event loop. The timeout number of seconds can be set in the game-settings.
  */
 function eventLoop(): void {
-  if (model.gameOver) {
+  if (model == null || model.gameOver) {
     view.showGameOver(true);
     return;
   }
@@ -40,9 +40,11 @@ function eventLoop(): void {
     if (lastDirectionPressed != null) {
       direction = lastDirectionPressed;
     }
-    model.moveSnake(direction);
+    model?.moveSnake(direction);
     lastDirectionPressed = null;
-    view.drawModelOnCanvas(model.gameModel);
+    if (model != null) {
+      view.drawModelOnCanvas(model);
+    }
     eventLoop();
   }, settings.SLEEPTIME);
 }
@@ -68,7 +70,7 @@ function changeDirection(newDirection: Direction): void {
 @desc Laat slang en voedsel verdwijnen, en teken leeg veld
 */
 function stop(): void {
-  model.setGameOver(true);
+  model?.setGameOver(true);
 }
 
 /**
