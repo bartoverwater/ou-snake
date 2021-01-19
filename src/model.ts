@@ -4,6 +4,9 @@ import settings from "./game-settings.js";
 export interface GameModel {
   food: Point[];
   snake: Point[];
+  gameOver: boolean;
+  setGameOver(bool: boolean): void;
+  moveSnake(direction: Direction): void;
 }
 
 export class Point {
@@ -22,86 +25,18 @@ export class Point {
   }
 }
 
-export let gameModel: SnakeGameModel;
-export let gameOver = false;
-
-export function setGameOver(isGameOver: boolean): void {
-  gameOver = isGameOver;
-}
-
-export function newGame(width: number, height: number): void {
-  gameOver = false;
-  gameModel = new SnakeGameModel(width, height);
-}
-
-export function moveSnake(direction: Direction): GameModel {
-  const head = gameModel.snake[gameModel.snake.length - 1];
-  let newX = head.x;
-  let newY = head.y;
-  switch (direction) {
-    case Direction.Up:
-      newY = head.y - settings.STEP;
-      break;
-    case Direction.Down:
-      newY = head.y + settings.STEP;
-      break;
-    case Direction.Left:
-      newX = head.x - settings.STEP;
-      break;
-    case Direction.Right:
-      newX = head.x + settings.STEP;
-      break;
-  }
-
-  const newPosition = new Point(head.color, newX, newY);
-
-  if (
-    gameModel.snake.some((snakeElement) =>
-      snakeElement.collidesWith(newPosition)
-    )
-  ) {
-    gameOver = true;
-  } else {
-    move(checkOutOfBounds(newPosition), head);
-  }
-  return gameModel;
-}
-
-function checkOutOfBounds(point: Point): Point {
-  const correctedPoint = new Point(point.color, point.x, point.y);
-  if (correctedPoint.x <= 0) {
-    correctedPoint.x = gameModel.width - settings.STEP;
-  } else if (correctedPoint.x >= gameModel.width) {
-    correctedPoint.x = 0 + settings.STEP;
-  }
-  if (correctedPoint.y < 0 + settings.ELEMENT_RADIUS) {
-    correctedPoint.y = gameModel.height - settings.STEP;
-  } else if (correctedPoint.y > gameModel.height - settings.ELEMENT_RADIUS) {
-    correctedPoint.y = 0 + settings.STEP;
-  }
-  return correctedPoint;
-}
-
-function move(newElement: Point, oldHead: Point) {
-  oldHead.color = settings.COLORS.SNAKE_BODY;
-  gameModel.snake.push(newElement);
-  if (!gameModel.food.some((food) => food.collidesWith(oldHead))) {
-    gameModel.snake.shift();
-  } else {
-    gameModel.food = gameModel.food.filter(
-      (element) => !element.collidesWith(oldHead)
-    );
-  }
+export function newModel(width: number, height: number): GameModel {
+  return new SnakeGameModel(width, height);
 }
 
 class SnakeGameModel implements GameModel {
   food: Point[] = [];
   snake: Point[] = [];
-  direction: Direction = Direction.Up;
-  maxWidth;
-  maxHeight;
-  width;
-  height;
+  gameOver = false;
+  private maxWidth;
+  private maxHeight;
+  private width;
+  private height;
 
   constructor(width: number, height: number) {
     this.width = width;
@@ -117,7 +52,7 @@ class SnakeGameModel implements GameModel {
       @desc [Element] array van random verdeelde voedselpartikelen
       @return [Element] array met food
     */
-  createFoods(amount: number): Point[] {
+  private createFoods(amount: number): Point[] {
     const newFoods = [];
     for (let i = 0; i < amount; i++) {
       let newFood = this.createFood();
@@ -127,36 +62,93 @@ class SnakeGameModel implements GameModel {
       ) {
         newFood = this.createFood();
       }
-      console.log(newFood);
       newFoods.push(newFood);
     }
-    return [...this.food, ...newFoods];
+    return newFoods;
   }
 
-  //todo Prevent collision with pointCollides function
-  createFood(): Point {
+  private createFood(): Point {
     return new Point(
       settings.COLORS.FOOD,
       roundToNearestGridCell(
-        getRandomInt(settings.MIN_WIDTH_HEIGHT, this.maxWidth)
+        getRandomInt(10 + settings.MIN_WIDTH_HEIGHT, this.maxWidth)
       ),
       roundToNearestGridCell(
-        getRandomInt(settings.MIN_WIDTH_HEIGHT, this.maxHeight)
+        getRandomInt(10 + settings.MIN_WIDTH_HEIGHT, this.maxHeight)
       )
     );
   }
 
-  createStartSnake(): Point[] {
-    const startingWidth = this.width / 2;
-    const startingHeight = this.height / 2;
+  private createStartSnake(): Point[] {
+    const startingWidth = settings.ELEMENT_RADIUS + this.width / 2;
+    const startingHeight = settings.ELEMENT_RADIUS + this.height / 2;
     return [
       new Point(settings.COLORS.SNAKE_BODY, startingWidth, startingHeight),
       new Point(
         settings.COLORS.SNAKE_HEAD,
         startingWidth,
-        startingHeight - settings.STEP
+        this.height / 2 - settings.ELEMENT_RADIUS
       ),
     ];
+  }
+
+  setGameOver(isGameOver: boolean): void {
+    this.gameOver = isGameOver;
+  }
+
+  moveSnake(direction: Direction): void {
+    const head = this.snake[this.snake.length - 1];
+    let newX = head.x;
+    let newY = head.y;
+    switch (direction) {
+      case Direction.Up:
+        newY = head.y - settings.STEP;
+        break;
+      case Direction.Down:
+        newY = head.y + settings.STEP;
+        break;
+      case Direction.Left:
+        newX = head.x - settings.STEP;
+        break;
+      case Direction.Right:
+        newX = head.x + settings.STEP;
+        break;
+    }
+
+    const newPosition = new Point(head.color, newX, newY);
+
+    if (
+      this.snake.some((snakeElement) => snakeElement.collidesWith(newPosition))
+    ) {
+      this.gameOver = true;
+    } else {
+      this.move(this.checkOutOfBounds(newPosition), head);
+    }
+  }
+
+  private checkOutOfBounds(point: Point): Point {
+    const correctedPoint = new Point(point.color, point.x, point.y);
+    if (correctedPoint.x <= 0) {
+      correctedPoint.x = this.width - settings.STEP;
+    } else if (correctedPoint.x >= this.width) {
+      correctedPoint.x = 0 + settings.STEP;
+    }
+    if (correctedPoint.y < 0 + settings.ELEMENT_RADIUS) {
+      correctedPoint.y = this.height - settings.STEP;
+    } else if (correctedPoint.y > this.height - settings.ELEMENT_RADIUS) {
+      correctedPoint.y = 0 + settings.STEP;
+    }
+    return correctedPoint;
+  }
+
+  private move(newElement: Point, oldHead: Point) {
+    oldHead.color = settings.COLORS.SNAKE_BODY;
+    this.snake.push(newElement);
+    if (!this.food.some((food) => food.collidesWith(oldHead))) {
+      this.snake.shift();
+    } else {
+      this.food = this.food.filter((element) => !element.collidesWith(oldHead));
+    }
   }
 }
 

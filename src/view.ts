@@ -2,7 +2,6 @@
 import { Direction } from "./direction.js";
 import { GameModel, Point } from "./model.js";
 import settings from "./game-settings.js";
-import gameSettings from "./game-settings.js";
 /** @module View */
 /**
  * The Html Canvas Element
@@ -31,12 +30,29 @@ export function onStartButtonClicked(
     );
 }
 
+export function showGameWon(): void {
+  const gameOverDiv = document.getElementById("gameover")!;
+  banner("YOU WIN!");
+}
+
+export function showGameStopped(gameOver: boolean): void {
+  banner("Spel gestopt");
+}
+
 export function showGameOver(gameOver: boolean): void {
   const gameOverDiv = document.getElementById("gameover")!;
-  gameOverDiv.style.visibility =
-    gameOver && gameOverDiv.style.visibility === "hidden"
-      ? "visible"
-      : "hidden";
+  banner("Game Over");
+//  gameOverDiv.style.visibility =
+//    gameOver && gameOverDiv.style.visibility === "hidden"
+//      ? "visible"
+//      : "hidden";
+}
+
+function banner(tekst: string): void {
+  canvasContext.font = "bold 50px Arial";
+  canvasContext.fillStyle = "purple";
+  canvasContext.textAlign = "center";
+  canvasContext.fillText(tekst, canvas.width/2, canvas.height/2);
 }
 
 /**
@@ -45,10 +61,14 @@ export function showGameOver(gameOver: boolean): void {
  * @export
  * @param {function(): void} onStopFunction The stop function to call when the stop button is clicked.
  */
-export function onStopButtonClicked(onStopFunction: () => void): void {
+export function onStopButtonClicked(
+  onStopFunction: (width: number, height: number) => void
+): void {
   document
     .getElementById("stopSnake")!
-    .addEventListener("click", onStopFunction);
+    .addEventListener("click", () =>
+    onStopFunction(canvas.width, canvas.height)
+  );
 }
 
 /**
@@ -63,6 +83,10 @@ export function drawModelOnCanvas(model: GameModel): void {
   model.food.forEach(drawPoint);
 }
 
+export function drawEmptyCanvas(model: GameModel): void {
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+//  showGameStopped();
+}
 /**
  * Adds the given changeDirFunction to the document "keydown" event listener.
  *

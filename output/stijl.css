@@ -110,7 +110,7 @@ en verderop (r146) nog een keer, maar dan weer op row? */
 .buttons {
   margin: 0.25em auto;
   width: 14em;
-  padding: 0 4em;
+  padding: 1em 4em;
 }
 
 button {
@@ -165,4 +165,9 @@ li > a {
 
 #gameover {
   visibility: hidden;
+  padding: 1em;
+  font-size: xx-large;
+  font-weight: bolder;
+  color: var(--primary-color);
+  text-shadow: .2em .2em .5em salmon;
 }
