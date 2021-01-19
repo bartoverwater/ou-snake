@@ -17,8 +17,8 @@ function init(width: number, height: number) {
   if (timeOut != undefined) {
     clearTimeout(timeOut);
   }
-//  view.showGameOver(false);
-  model.newGame(width, height);
+  view.showGameOver(false);
+  model = newModel(width, height);
   view.onDirectionChanged(changeDirection);
   direction = Direction.Up;
   eventLoop();
@@ -32,20 +32,18 @@ let lastDirectionPressed: Direction | null = null;
  * Starts the event loop. The timeout number of seconds can be set in the game-settings.
  */
 function eventLoop(): void {
-  if (model.gameOver) {
-    view.drawEmptyCanvas(model.gameModel);
+  if (model == null || model.gameOver) {
     view.showGameOver(true);
     return;
-  else if (model.food.length == 0) {
-      view.showGameWon();
-      return;
-    }
+  } else if (model.food.length == 0) {
+    view.showGameWon();
+    return;
   }
   timeOut = setTimeout(() => {
     if (lastDirectionPressed != null) {
       direction = lastDirectionPressed;
     }
-    model.moveSnake(direction);
+    model?.moveSnake(direction);
     lastDirectionPressed = null;
     if (model != null) {
       view.drawModelOnCanvas(model);
@@ -75,8 +73,8 @@ function changeDirection(newDirection: Direction): void {
 @desc Laat slang en voedsel verdwijnen, en teken leeg veld
 */
 function stop(width: number, height: number): void {
-  model.setGameOver(true);
-//  view.drawEmptyCanvas(model.gameModel)
+  model?.setGameOver(true);
+  view.drawEmptyCanvas(model);
 }
 
 /**

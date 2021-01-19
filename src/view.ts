@@ -42,17 +42,17 @@ export function showGameStopped(gameOver: boolean): void {
 export function showGameOver(gameOver: boolean): void {
   const gameOverDiv = document.getElementById("gameover")!;
   banner("Game Over");
-//  gameOverDiv.style.visibility =
-//    gameOver && gameOverDiv.style.visibility === "hidden"
-//      ? "visible"
-//      : "hidden";
+  //  gameOverDiv.style.visibility =
+  //    gameOver && gameOverDiv.style.visibility === "hidden"
+  //      ? "visible"
+  //      : "hidden";
 }
 
 function banner(tekst: string): void {
   canvasContext.font = "bold 50px Arial";
   canvasContext.fillStyle = "purple";
   canvasContext.textAlign = "center";
-  canvasContext.fillText(tekst, canvas.width/2, canvas.height/2);
+  canvasContext.fillText(tekst, canvas.width / 2, canvas.height / 2);
 }
 
 /**
@@ -67,8 +67,8 @@ export function onStopButtonClicked(
   document
     .getElementById("stopSnake")!
     .addEventListener("click", () =>
-    onStopFunction(canvas.width, canvas.height)
-  );
+      onStopFunction(canvas.width, canvas.height)
+    );
 }
 
 /**
@@ -83,9 +83,9 @@ export function drawModelOnCanvas(model: GameModel): void {
   model.food.forEach(drawPoint);
 }
 
-export function drawEmptyCanvas(model: GameModel): void {
+export function drawEmptyCanvas(model: GameModel | null): void {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-//  showGameStopped();
+  showGameStopped(model != null);
 }
 /**
  * Adds the given changeDirFunction to the document "keydown" event listener.
