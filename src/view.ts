@@ -31,21 +31,15 @@ export function onStartButtonClicked(
 }
 
 export function showGameWon(): void {
-  const gameOverDiv = document.getElementById("gameover")!;
   banner("YOU WIN!");
 }
 
-export function showGameStopped(gameOver: boolean): void {
+export function showGameStopped(): void {
   banner("Spel gestopt");
 }
 
-export function showGameOver(gameOver: boolean): void {
-  const gameOverDiv = document.getElementById("gameover")!;
+export function showGameOver(): void {
   banner("Game Over");
-  //  gameOverDiv.style.visibility =
-  //    gameOver && gameOverDiv.style.visibility === "hidden"
-  //      ? "visible"
-  //      : "hidden";
 }
 
 function banner(tekst: string): void {
@@ -64,11 +58,9 @@ function banner(tekst: string): void {
 export function onStopButtonClicked(
   onStopFunction: (width: number, height: number) => void
 ): void {
-  document
-    .getElementById("stopSnake")!
-    .addEventListener("click", () =>
-      onStopFunction(canvas.width, canvas.height)
-    );
+  document.getElementById("stopSnake")!.addEventListener("click", () => {
+    onStopFunction(canvas.width, canvas.height);
+  });
 }
 
 /**
@@ -81,11 +73,6 @@ export function drawModelOnCanvas(model: GameModel): void {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
   model.snake.forEach(drawPoint);
   model.food.forEach(drawPoint);
-}
-
-export function drawEmptyCanvas(model: GameModel | null): void {
-  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-  showGameStopped(model != null);
 }
 /**
  * Adds the given changeDirFunction to the document "keydown" event listener.

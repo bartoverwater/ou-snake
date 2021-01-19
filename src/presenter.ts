@@ -6,7 +6,13 @@ import settings from "./game-settings.js";
 /**
  * @module Presenter
  */
+
 let model: GameModel | null;
+let timeOut: number | null = null;
+let direction: Direction;
+let lastDirectionPressed: Direction | null = null;
+let stopped = false;
+
 /**
  * Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles.
  *
@@ -17,23 +23,23 @@ function init(width: number, height: number) {
   if (timeOut != undefined) {
     clearTimeout(timeOut);
   }
-  view.showGameOver(false);
+  if (stopped) {
+    stopped = false;
+    eventLoop();
+    return;
+  }
   model = newModel(width, height);
   view.onDirectionChanged(changeDirection);
   direction = Direction.Up;
   eventLoop();
 }
 
-let timeOut: number | null = null;
-let direction: Direction;
-let lastDirectionPressed: Direction | null = null;
-
 /**
  * Starts the event loop. The timeout number of seconds can be set in the game-settings.
  */
 function eventLoop(): void {
   if (model == null || model.gameOver) {
-    view.showGameOver(true);
+    view.showGameOver();
     return;
   } else if (model.food.length == 0) {
     view.showGameWon();
@@ -72,9 +78,12 @@ function changeDirection(newDirection: Direction): void {
 @function stop() -> void
 @desc Laat slang en voedsel verdwijnen, en teken leeg veld
 */
-function stop(width: number, height: number): void {
-  model?.setGameOver(true);
-  view.drawEmptyCanvas(model);
+function stop(): void {
+  if (timeOut != null) {
+    clearTimeout(timeOut);
+  }
+  stopped = true;
+  view.showGameStopped();
 }
 
 /**
