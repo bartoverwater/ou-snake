@@ -28,6 +28,7 @@ function init(width: number, height: number) {
     eventLoop();
     return;
   }
+  lastDirectionPressed = null;
   model = newModel(width, height);
   view.onDirectionChanged(changeDirection);
   direction = Direction.Up;
