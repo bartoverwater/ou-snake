@@ -71,10 +71,16 @@ class SnakeGameModel implements GameModel {
     return new Point(
       settings.COLORS.FOOD,
       roundToNearestGridCell(
-        getRandomInt(10 + settings.MIN_WIDTH_HEIGHT, this.maxWidth)
+        getRandomInt(
+          settings.ELEMENT_RADIUS + settings.MIN_WIDTH_HEIGHT,
+          this.maxWidth
+        )
       ),
       roundToNearestGridCell(
-        getRandomInt(10 + settings.MIN_WIDTH_HEIGHT, this.maxHeight)
+        getRandomInt(
+          settings.ELEMENT_RADIUS + settings.MIN_WIDTH_HEIGHT,
+          this.maxHeight
+        )
       )
     );
   }

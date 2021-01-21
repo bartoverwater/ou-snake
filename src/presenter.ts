@@ -83,8 +83,10 @@ function stop(): void {
   if (timeOut != null) {
     clearTimeout(timeOut);
   }
-  stopped = true;
-  view.showGameStopped();
+  if (model?.food.length != 0 && !model?.gameOver) {
+    stopped = true;
+    view.showGameStopped();
+  }
 }
 
 /**

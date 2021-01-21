@@ -3,12 +3,14 @@ import { Direction } from "./direction.js";
 import { GameModel, Point } from "./model.js";
 import settings from "./game-settings.js";
 /** @module View */
+
 /**
  * The Html Canvas Element
  * @type {HTMLCanvasElement} */
 const canvas: HTMLCanvasElement = document.getElementById(
   "mySnakeCanvas"
 )! as HTMLCanvasElement;
+
 /**
  * The 2d rendering context of the canvas.
  * @type {CanvasRenderingContext2D}  */
