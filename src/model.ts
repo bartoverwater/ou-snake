@@ -1,6 +1,8 @@
 import { Direction } from "./direction.js";
 import settings from "./game-settings.js";
 
+/** @module Model */
+
 /**
  Interface for the class SnakeGameModel to represent the Snake game.
  @interface
@@ -89,6 +91,7 @@ class SnakeGameModel implements GameModel {
       @function createFoods(amount) -> Point[]
       @desc creates an array of food particles represented as instances of Point.
       @param {number} amount - the number of food particles to be created
+      @memberof SnakeGameModel
       @return {Point[]} newFoods  - an array of 'food particles'
   */
   private createFoods(amount: number): Point[] {
@@ -110,6 +113,7 @@ class SnakeGameModel implements GameModel {
   @function createFood() -> Point
   @desc creates a food particle with the set color of Food
         and randomly calculated x- and y-coordinates.
+  @memberof SnakeGameModel
   @return {Point} - the new food particle
   */
   private createFood(): Point {
@@ -134,6 +138,7 @@ class SnakeGameModel implements GameModel {
    @function createStartSnake() -> Point[]
    @desc creates the initial snake at the start of the game
          with a body particle and a head particle
+   @memberof SnakeGameModel
    @return {Point[]} the snake at the start of the game
   */
   private createStartSnake(): Point[] {
@@ -157,6 +162,7 @@ class SnakeGameModel implements GameModel {
   @function moveSnake(direction) -> void
   @desc moves the snake in the given direction
   @param {Direction} direction - the direction of the arrow key pressed down by the player
+  @memberof SnakeGameModel
   */
   moveSnake(direction: Direction): void {
     const head = this.snake[this.snake.length - 1];
@@ -193,6 +199,7 @@ class SnakeGameModel implements GameModel {
   @desc lets the snake appear on the other side of the canvas
         if the snake reaches the border of the canvas
         by changing the coordinates matching with the other side.
+  @memberof SnakeGameModel
   @return {Point} the point with corrected coordinates
   */
   private checkOutOfBounds(point: Point): Point {
@@ -214,6 +221,7 @@ class SnakeGameModel implements GameModel {
   @function move(newElement, oldHead) -> void
   @desc increments the body of the snake if the snake 'eats' a food particle
         and removes the eaten particle from the canvas.
+  @memberof SnakeGameModel
   */
   private move(newElement: Point, oldHead: Point) {
     oldHead.color = settings.COLORS.SNAKE_BODY;
@@ -241,6 +249,7 @@ function getRandomInt(min: number, max: number): number {
 @function roundToNearestGridCell(number: number) -> number
 @desc rounds a number to match the coordinates of a cell in the canvas
       to make sure the snake can have a perfect collision with the food-particles.
+@memberof SnakeGameModel
 @return {number} the rounded number
 */
 function roundToNearestGridCell(number: number): number {

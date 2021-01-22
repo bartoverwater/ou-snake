@@ -3,9 +3,7 @@ import * as view from "./view.js";
 import { GameModel, newModel } from "./model.js";
 import settings from "./game-settings.js";
 
-/**
- @module Presenter
- */
+/** @module Presenter */
 
 let model: GameModel | null;
 let timeOut: number | null = null;
