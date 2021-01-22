@@ -2,20 +2,18 @@
 import { Direction } from "./direction.js";
 import { GameModel, Point } from "./model.js";
 import settings from "./game-settings.js";
-
 /** @module View */
 
 /**
- The Html Canvas Element
- @type {HTMLCanvasElement}
- */
+ * The Html Canvas Element
+ * @type {HTMLCanvasElement} */
 const canvas: HTMLCanvasElement = document.getElementById(
   "mySnakeCanvas"
 )! as HTMLCanvasElement;
 
 /**
- The 2d rendering context of the canvas.
- @type {CanvasRenderingContext2D}  */
+ * The 2d rendering context of the canvas.
+ * @type {CanvasRenderingContext2D}  */
 const canvasContext: CanvasRenderingContext2D = canvas.getContext("2d")!;
 
 /**
@@ -38,7 +36,6 @@ export function onStartButtonClicked(
  @desc presents the user with the banner 'You Win!' when the snake has eaten all food and the game is won.
 */
 export function showGameWon(): void {
-  const gameOverDiv = document.getElementById("gameover")!;
   banner("YOU WIN!");
 }
 
@@ -46,7 +43,7 @@ export function showGameWon(): void {
  @function showGameStopped() -> void
  @desc presents the user with a banner 'Spel gestopt' when user clicks on the stop-button.
 */
-export function showGameStopped(gameOver: boolean): void {
+export function showGameStopped(): void {
   banner("Spel gestopt");
 }
 
@@ -54,13 +51,8 @@ export function showGameStopped(gameOver: boolean): void {
  @function showGameOver() -> void
  @desc presents the user with a banner 'Game Over' when the snake hits a part of itself
 */
-export function showGameOver(gameOver: boolean): void {
+export function showGameOver(): void {
   banner("Game Over");
-//  const gameOverDiv = document.getElementById("gameover")!;
-//  gameOverDiv.style.visibility =
-//    gameOver && gameOverDiv.style.visibility === "hidden"
-//      ? "visible"
-//      : "hidden";
 }
 
 /**
@@ -72,7 +64,7 @@ function banner(tekst: string): void {
   canvasContext.font = "bold 50px Arial";
   canvasContext.fillStyle = "purple";
   canvasContext.textAlign = "center";
-  canvasContext.fillText(tekst, canvas.width/2, canvas.height/2);
+  canvasContext.fillText(tekst, canvas.width / 2, canvas.height / 2);
 }
 
 /**
@@ -83,11 +75,9 @@ function banner(tekst: string): void {
 export function onStopButtonClicked(
   onStopFunction: (width: number, height: number) => void
 ): void {
-  document
-    .getElementById("stopSnake")!
-    .addEventListener("click", () =>
-    onStopFunction(canvas.width, canvas.height)
-  );
+  document.getElementById("stopSnake")!.addEventListener("click", () => {
+    onStopFunction(canvas.width, canvas.height);
+  });
 }
 
 /**
@@ -101,15 +91,6 @@ export function drawModelOnCanvas(model: GameModel): void {
   model.food.forEach(drawPoint);
 }
 
-/**
- @function drawEmptyCanvas(model) -> void
- @desc Clears the canvas and draws an empty Canvas.
- @param {GameModel} model A model to draw on the canvas.
- */
-export function drawEmptyCanvas(model: GameModel): void {
-  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-//  showGameStopped();
-}
 /**
  @function onDirectionChanged(changeDirFunction) -> void
  @desc Adds the given changeDirFunction to the document "keydown" event listener.
