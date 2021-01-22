@@ -249,7 +249,6 @@ function getRandomInt(min: number, max: number): number {
 @function roundToNearestGridCell(number: number) -> number
 @desc rounds a number to match the coordinates of a cell in the canvas
       to make sure the snake can have a perfect collision with the food-particles.
-@memberof SnakeGameModel
 @return {number} the rounded number
 */
 function roundToNearestGridCell(number: number): number {
