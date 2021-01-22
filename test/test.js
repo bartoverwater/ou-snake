@@ -79,3 +79,12 @@ QUnit.test("Food does not get created out of bounds", function (assert) {
   );
   assert.false(anyFoodOutsideBounds);
 });
+
+QUnit.test("Round to nearest grid cell works", function (assert) {
+  const allElementsInCells = this.gameModel.food.every(
+    (element) =>
+      (element.x / settings.ELEMENT_RADIUS) % 2 == 0 &&
+      (element.y / settings.ELEMENT_RADIUS) % 2 == 0
+  );
+  assert.true(allElementsInCells);
+});

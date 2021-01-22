@@ -161,12 +161,3 @@ li > a {
     width: 90%;
   }
 }
-
-#gameover {
-  visibility: hidden;
-  padding: 1em;
-  font-size: xx-large;
-  font-weight: bolder;
-  color: var(--primary-color);
-  text-shadow: 0.2em 0.2em 0.5em salmon;
-}
