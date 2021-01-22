@@ -4,7 +4,7 @@ import { GameModel, newModel } from "./model.js";
 import settings from "./game-settings.js";
 
 /**
- * @module Presenter
+ @module Presenter
  */
 
 let model: GameModel | null;
@@ -14,10 +14,10 @@ let lastDirectionPressed: Direction | null = null;
 let stopped = false;
 
 /**
- * Haal eventueel bestaand voedsel en een bestaande slang weg, cre\"eer een slang, genereer voedsel, en teken alles.
- *
- * @param {number} width De width van het speelveld
- * @param {number} height De height van het speelveld
+ @function init(width, height) -> void
+ @desc Remove any previous food- or snake-segments, create a new snake, generate food and draw everything on the canvas.
+ @param {number} width - The width of the canvas
+ @param {number} height -The height of the canvas
  */
 function init(width: number, height: number) {
   if (timeOut != undefined) {
@@ -36,7 +36,8 @@ function init(width: number, height: number) {
 }
 
 /**
- * Starts the event loop. The timeout number of seconds can be set in the game-settings.
+ @function eventLoop() -> void
+ @desc Starts the event loop unless the game is over or stopped. The timeout number of seconds can be set in the game-settings.
  */
 function eventLoop(): void {
   if (model == null || model.gameOver) {
@@ -60,9 +61,9 @@ function eventLoop(): void {
 }
 
 /**
- * A function to pass the new direction from the view to the model.
- *
- * @param {Direction} newDirection
+ @function changeDirection(newDirection) -> void
+ @desc A function to pass the new direction from the view to the model.
+ @param {Direction} newDirection - the new direction based on the arrow key pressed by the player
  */
 function changeDirection(newDirection: Direction): void {
   if (
@@ -76,8 +77,8 @@ function changeDirection(newDirection: Direction): void {
 }
 
 /**
-@function stop() -> void
-@desc Laat slang en voedsel verdwijnen, en teken leeg veld
+ @function stop() -> void
+ @desc pauses the game when player uses the stop-button
 */
 function stop(): void {
   if (timeOut != null) {
@@ -90,16 +91,14 @@ function stop(): void {
 }
 
 /**
- * Main presenter class, used to initialize the code.
- *
- * @export
- * @class Presenter
+ Main presenter class, used to initialize the code.
+ @class Presenter
  */
 export class Presenter {
   /**
-   * Initializes the code. This does not start the game.
-   *
-   * @memberof Presenter
+   @function load() -> void
+   @desc Initializes the code. This does not automatically start the game.
+   @memberof Presenter
    */
   load(): void {
     view.onStartButtonClicked(init);

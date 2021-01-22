@@ -1,6 +1,10 @@
 import { Direction } from "./direction.js";
 import settings from "./game-settings.js";
 
+/**
+ Interface for the class SnakeGameModel to represent the Snake game.
+ @interface
+*/
 export interface GameModel {
   food: Point[];
   snake: Point[];
@@ -9,26 +13,54 @@ export interface GameModel {
   moveSnake(direction: Direction): void;
 }
 
+/**
+ A Class used to represent Food or Snakesegments as Points with properties color and coordinates x and y.
+ @class
+*/
 export class Point {
   color: string;
   x: number;
   y: number;
 
+  /**
+   @constructor Point
+   @param {string} color - the color of the Point
+   @param {number} x     - the x-coordinate of the Point
+   @param {number} y     - the y-coordinate of the Point
+  */
   constructor(color: string, x: number, y: number) {
     this.color = color;
     this.x = x;
     this.y = y;
   }
 
+  /**
+   @function collidesWith(other) -> boolean(color, x,y)
+   @desc Determines whether this point collides with another Point
+   @param {Point} other - the other point
+   @return {boolean} - true if there is a collision, false if there is no collision
+  */
   collidesWith(other: Point): boolean {
     return this.x === other.x && this.y === other.y;
   }
 }
 
+/**
+ @function newModel(width, height) -> GameModel
+ @desc  creates a new snake and food within the canvas.
+ @param {number} width   - the width of the canvas
+ @param {number} height  - the height of the canvas
+ @return {GameModel}    - the new snakegamemodel
+*/
 export function newModel(width: number, height: number): GameModel {
   return new SnakeGameModel(width, height);
 }
 
+/**
+ A class used to represent the SnakeGame with a.o. snake and food
+ @class
+*
+*/
 class SnakeGameModel implements GameModel {
   food: Point[] = [];
   snake: Point[] = [];
@@ -38,6 +70,12 @@ class SnakeGameModel implements GameModel {
   private width;
   private height;
 
+  /**
+   @constructor SnakeGameModel
+   @desc creates a new SnakeGameModel with a snake and food within the canvas.
+   @param {number} width  - the width of the canvas
+   @param {number} height - the height of the canvas
+  */
   constructor(width: number, height: number) {
     this.width = width;
     this.height = height;
@@ -48,10 +86,11 @@ class SnakeGameModel implements GameModel {
   }
 
   /**
-      @function createFoods() -> array met food
-      @desc [Element] array van random verdeelde voedselpartikelen
-      @return [Element] array met food
-    */
+      @function createFoods(amount) -> Point[]
+      @desc creates an array of food particles represented as instances of Point.
+      @param {number} amount - the number of food particles to be created
+      @return {Point[]} newFoods  - an array of 'food particles'
+  */
   private createFoods(amount: number): Point[] {
     const newFoods = [];
     for (let i = 0; i < amount; i++) {
@@ -67,6 +106,12 @@ class SnakeGameModel implements GameModel {
     return newFoods;
   }
 
+  /**
+  @function createFood() -> Point
+  @desc creates a food particle with the set color of Food
+        and randomly calculated x- and y-coordinates.
+  @return {Point} - the new food particle
+  */
   private createFood(): Point {
     return new Point(
       settings.COLORS.FOOD,
@@ -85,6 +130,12 @@ class SnakeGameModel implements GameModel {
     );
   }
 
+  /**
+   @function createStartSnake() -> Point[]
+   @desc creates the initial snake at the start of the game
+         with a body particle and a head particle
+   @return {Point[]} the snake at the start of the game
+  */
   private createStartSnake(): Point[] {
     const startingWidth = settings.ELEMENT_RADIUS + this.width / 2;
     const startingHeight = settings.ELEMENT_RADIUS + this.height / 2;
@@ -102,6 +153,11 @@ class SnakeGameModel implements GameModel {
     this.gameOver = isGameOver;
   }
 
+  /**
+  @function moveSnake(direction) -> void
+  @desc moves the snake in the given direction
+  @param {Direction} direction - the direction of the arrow key pressed down by the player
+  */
   moveSnake(direction: Direction): void {
     const head = this.snake[this.snake.length - 1];
     let newX = head.x;
@@ -132,6 +188,13 @@ class SnakeGameModel implements GameModel {
     }
   }
 
+  /**
+  @function checkOutOfBounds(point) -> Point
+  @desc lets the snake appear on the other side of the canvas
+        if the snake reaches the border of the canvas
+        by changing the coordinates matching with the other side.
+  @return {Point} the point with corrected coordinates
+  */
   private checkOutOfBounds(point: Point): Point {
     const correctedPoint = new Point(point.color, point.x, point.y);
     if (correctedPoint.x <= 0) {
@@ -147,6 +210,11 @@ class SnakeGameModel implements GameModel {
     return correctedPoint;
   }
 
+  /**
+  @function move(newElement, oldHead) -> void
+  @desc increments the body of the snake if the snake 'eats' a food particle
+        and removes the eaten particle from the canvas.
+  */
   private move(newElement: Point, oldHead: Point) {
     oldHead.color = settings.COLORS.SNAKE_BODY;
     this.snake.push(newElement);
@@ -160,15 +228,21 @@ class SnakeGameModel implements GameModel {
 
 /**
   @function getRandomInt(min: number, max: number) -> number
-  @desc Creeren van random geheel getal in het interval [min, max]
-  @param {number} min een geheel getal als onderste grenswaarde
-  @param {number} max een geheel getal als bovenste grenswaarde (max > min)
-  @return {number} een random geheel getal x waarvoor geldt: min <= x <= max
+  @desc Creates a random integer within the [min, max] interval
+  @param {number} min an integer as the minimum value
+  @param {number} max an integer as the maximum value (max > min)
+  @return {number} a random integer x (min <= x <= max)
 */
 function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/**
+@function roundToNearestGridCell(number: number) -> number
+@desc rounds a number to match the coordinates of a cell in the canvas
+      to make sure the snake can have a perfect collision with the food-particles.
+@return {number} the rounded number
+*/
 function roundToNearestGridCell(number: number): number {
   return Math.ceil(number / settings.STEP) * settings.STEP;
 }

@@ -6,22 +6,22 @@ import settings from "./game-settings.js";
 /** @module View */
 
 /**
- * The Html Canvas Element
- * @type {HTMLCanvasElement}
+ The Html Canvas Element
+ @type {HTMLCanvasElement}
  */
 const canvas: HTMLCanvasElement = document.getElementById(
   "mySnakeCanvas"
 )! as HTMLCanvasElement;
 
 /**
- * The 2d rendering context of the canvas.
- * @type {CanvasRenderingContext2D}  */
+ The 2d rendering context of the canvas.
+ @type {CanvasRenderingContext2D}  */
 const canvasContext: CanvasRenderingContext2D = canvas.getContext("2d")!;
 
 /**
- * @function onStartButtonClicked
- * @desc Gets the startSnake button from the DOM and adds onStartFunction to the Click Event Listener.
- * @param {function(number, number): void} onStartFunction The function to call when the start button is clicked.
+ @function onStartButtonClicked(onStartFunction) -> void
+ @desc Gets the startSnake button from the DOM and adds onStartFunction to the Click Event Listener.
+ @param {function(number, number): void} onStartFunction The function to call when the start button is clicked.
  */
 export function onStartButtonClicked(
   onStartFunction: (width: number, height: number) => void
@@ -34,8 +34,8 @@ export function onStartButtonClicked(
 }
 
 /**
-* @function showGameWon
-* @desc presents the user with the banner 'You Win!' when the snake has eaten all food and the game is won.
+ @function showGameWon() -> void
+ @desc presents the user with the banner 'You Win!' when the snake has eaten all food and the game is won.
 */
 export function showGameWon(): void {
   const gameOverDiv = document.getElementById("gameover")!;
@@ -43,16 +43,16 @@ export function showGameWon(): void {
 }
 
 /**
-* @function showGameStopped
-* @desc presents the user with a banner 'Spel gestopt' when user clicks on the stop-button.
+ @function showGameStopped() -> void
+ @desc presents the user with a banner 'Spel gestopt' when user clicks on the stop-button.
 */
 export function showGameStopped(gameOver: boolean): void {
   banner("Spel gestopt");
 }
 
 /**
-* @function showGameOver
-* @desc presents the user with a banner 'Game Over' when the snake hits a part of itself
+ @function showGameOver() -> void
+ @desc presents the user with a banner 'Game Over' when the snake hits a part of itself
 */
 export function showGameOver(gameOver: boolean): void {
   banner("Game Over");
@@ -64,9 +64,9 @@ export function showGameOver(gameOver: boolean): void {
 }
 
 /**
-* @function banner
-* @desc creates a banner in the canvas to present to the user a string with the result of the game
-* @param {string} tekst - the text to be shown in the banner
+ @function banner(tekst) -> void
+ @desc creates a banner in the canvas to present to the user a string with the result of the game
+ @param {string} tekst - the text to be shown in the banner
 */
 function banner(tekst: string): void {
   canvasContext.font = "bold 50px Arial";
@@ -76,10 +76,10 @@ function banner(tekst: string): void {
 }
 
 /**
- * @function onStopButtonClicked
- * @desc Gets the stopSnake button from the DOM and adds the onStopFunction to the Click Event Listener.
- * @param {function(): void} onStopFunction The stop function to call when the stop button is clicked.
- */
+ @function onStopButtonClicked(onStopFunction) -> void
+ @desc Gets the stopSnake button from the DOM and adds the onStopFunction to the Click Event Listener.
+ @param {function(): void} onStopFunction The stop function to call when the stop button is clicked.
+*/
 export function onStopButtonClicked(
   onStopFunction: (width: number, height: number) => void
 ): void {
@@ -88,11 +88,12 @@ export function onStopButtonClicked(
     .addEventListener("click", () =>
     onStopFunction(canvas.width, canvas.height)
   );
+}
 
 /**
- * @function drawModelOnCanvas
- * @desc Clears the canvas and then draws the snake and food arrays from the model on the canvas.
- * @param {GameModel} model A model to draw on the canvas.
+ @function drawModelOnCanvas(model) -> void
+ @desc Clears the canvas and then draws the snake and food arrays from the model on the canvas.
+ @param {GameModel} model A model to draw on the canvas.
  */
 export function drawModelOnCanvas(model: GameModel): void {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
@@ -101,18 +102,18 @@ export function drawModelOnCanvas(model: GameModel): void {
 }
 
 /**
- * @function drawEmptyCanvas
- * @desc Clears the canvas and draws an empty Canvas.
- * @param {GameModel} model A model to draw on the canvas.
+ @function drawEmptyCanvas(model) -> void
+ @desc Clears the canvas and draws an empty Canvas.
+ @param {GameModel} model A model to draw on the canvas.
  */
 export function drawEmptyCanvas(model: GameModel): void {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 //  showGameStopped();
 }
 /**
- * @function onDirectionChanged
- * @desc Adds the given changeDirFunction to the document "keydown" event listener.
- * @param  {function(Direction): void} changeDirFunction
+ @function onDirectionChanged(changeDirFunction) -> void
+ @desc Adds the given changeDirFunction to the document "keydown" event listener.
+ @param  {function(Direction): void} changeDirFunction
  */
 export function onDirectionChanged(
   changeDirFunction: (newDirection: Direction) => void
@@ -141,10 +142,10 @@ export function onDirectionChanged(
 }
 
 /**
- * @function drawPoint
- * NB zoals het er nu staat, moet het eigenlijk @const ipv @function zijn...
- * @desc Draws the given point on the canvas.
- * @param {Point} point Point to draw on the canvas.
+ @function drawPoint(point) -> void
+ NB zoals het er nu staat, moet het eigenlijk @const ipv @function zijn...
+ @desc Draws the given point on the canvas.
+ @param {Point} point Point to draw on the canvas.
  */
 const drawPoint = (point: Point): void => {
   const circle = new Path2D();
