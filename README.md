@@ -63,4 +63,29 @@ op één plek aan te passen zijn.
 
 Voor de Direction(Up, Down, Left, Right) hebben we een enum gemaakt in een apart bestand.
 
+## Site starten en testen
+
+Om de tests te draaien:
+
+```
+$ npm test
+```
+
+Typescript compileren:
+
+```
+$ npm run build
+```
+
+Http-server starten op localhost:8080:
+
+```
+$ npm start
+```
+
+Typescript compileren in --watch mode en http server starten:
+
+```
+$ npm run dev
+```
 
