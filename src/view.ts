@@ -87,8 +87,8 @@ export function onStopButtonClicked(
  */
 export function drawModelOnCanvas(model: GameModel): void {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-  model.snake.forEach(drawPoint);
   model.food.forEach(drawPoint);
+  model.snake.forEach(drawPoint);
 }
 
 /**

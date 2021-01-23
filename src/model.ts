@@ -11,7 +11,6 @@ export interface GameModel {
   food: Point[];
   snake: Point[];
   gameOver: boolean;
-  setGameOver(bool: boolean): void;
   moveSnake(direction: Direction): void;
 }
 
@@ -25,7 +24,6 @@ export class Point {
   y: number;
 
   /**
-   @constructor Point
    @param {string} color - the color of the Point
    @param {number} x     - the x-coordinate of the Point
    @param {number} y     - the y-coordinate of the Point
@@ -73,7 +71,6 @@ class SnakeGameModel implements GameModel {
   private height;
 
   /**
-   @constructor SnakeGameModel
    @desc creates a new SnakeGameModel with a snake and food within the canvas.
    @param {number} width  - the width of the canvas
    @param {number} height - the height of the canvas
@@ -152,10 +149,6 @@ class SnakeGameModel implements GameModel {
         this.height / 2 - settings.ELEMENT_RADIUS
       ),
     ];
-  }
-
-  setGameOver(isGameOver: boolean): void {
-    this.gameOver = isGameOver;
   }
 
   /**

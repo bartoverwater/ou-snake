@@ -28,7 +28,6 @@ function init(width: number, height: number) {
   }
   lastDirectionPressed = null;
   model = newModel(width, height);
-  view.onDirectionChanged(changeDirection);
   direction = Direction.Up;
   eventLoop();
 }
@@ -101,5 +100,6 @@ export class Presenter {
   load(): void {
     view.onStartButtonClicked(init);
     view.onStopButtonClicked(stop);
+    view.onDirectionChanged(changeDirection);
   }
 }

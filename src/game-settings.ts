@@ -1,7 +1,7 @@
 const R = 10;
 
 export default {
-  ELEMENT_RADIUS: R, //Straal van een element
+  ELEMENT_RADIUS: R,
   STEP: 2 * R,
   NUM_FOODS: 5,
   SLEEPTIME: 500,
