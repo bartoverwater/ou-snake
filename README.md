@@ -67,7 +67,7 @@ Voor de Direction(Up, Down, Left, Right) hebben we een enum gemaakt in een apart
 
 Download de dependencies:
 ```
-npm install
+$ npm install
 ```
 
 Tests draaien:
