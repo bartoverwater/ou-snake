@@ -122,6 +122,21 @@ export function onDirectionChanged(
   });
 }
 
+export function onCompetitiveModeClicked(func: (bool: boolean) => void): void {
+  const checkBox = <HTMLInputElement>(
+    document.getElementById("comp-mode-checkbox")!
+  );
+  const highscoreTable = document.getElementById("highscore-table")!;
+  checkBox.addEventListener("change", function () {
+    func(checkBox.checked);
+    if (checkBox.checked) {
+      highscoreTable.className = "";
+    } else {
+      highscoreTable.className = "hidden";
+    }
+  });
+}
+
 /**
  @function drawPoint(point) -> void
  @desc Draws the given point on the canvas.

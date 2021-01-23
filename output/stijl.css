@@ -7,7 +7,6 @@
   --primary-color: Purple;
   --secondary-color: Ivory;
   --btn-hover-color: salmon;
-  /*--btn-hover-color: rgb(221, 218, 218);*/
 }
 
 body {
@@ -84,10 +83,6 @@ canvas {
 
 /*** Onderdelen menu en andere details ***/
 
-/* Is het niet een beetje dubbelop (en onlogisch?) om r70 het menu op flex-row te zetten,
-in r93 de menuopties op flex te zetten, met de menuopties op column
-en verderop (r146) nog een keer, maar dan weer op row? */
-
 .menuopties {
   display: flex;
   flex-direction: column;
@@ -122,7 +117,6 @@ button {
 }
 
 button:hover,
-/*li:hover deze hover lijkt overbodig? */
 a:hover {
   outline: none;
   background: var(--btn-hover-color);
@@ -160,4 +154,54 @@ li > a {
   li > a {
     width: 90%;
   }
+}
+
+/** Highscore board en competitive-mode ***/
+.game-container {
+  display: flex;
+  justify-content: center;
+}
+
+.comp-mode {
+  padding: 8.25em 2em;
+}
+
+.comp-mode-checkbox-container {
+  display: block;
+}
+
+#highscore-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 10rem;
+  font-family: sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+#highscore-table th,
+#highscore-table td {
+  padding: 12px 15px;
+}
+
+#highscore-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+#highscore-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+#highscore-table tbody tr:last-of-type {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+#highscore-table thead tr {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  text-align: left;
+}
+
+.hidden {
+  visibility: hidden;
 }

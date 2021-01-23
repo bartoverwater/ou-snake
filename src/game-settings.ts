@@ -6,6 +6,7 @@ export default {
   NUM_FOODS: 5,
   SLEEPTIME: 500,
   MIN_WIDTH_HEIGHT: 0 + R,
+  SCORE_PER_FOOD: 10,
 
   //colors
   COLORS: {

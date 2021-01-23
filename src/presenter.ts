@@ -10,6 +10,7 @@ let timeOut: number | null = null;
 let direction: Direction;
 let lastDirectionPressed: Direction | null = null;
 let stopped = false;
+let competitiveMode = false;
 
 /**
  @function init(width, height) -> void
@@ -27,7 +28,7 @@ function init(width: number, height: number) {
     return;
   }
   lastDirectionPressed = null;
-  model = newModel(width, height);
+  model = newModel(width, height, competitiveMode);
   direction = Direction.Up;
   eventLoop();
 }
@@ -43,6 +44,9 @@ function eventLoop(): void {
   } else if (model.food.length == 0) {
     view.showGameWon();
     return;
+  }
+  if (competitiveMode) {
+    console.log(model.score);
   }
   timeOut = setTimeout(() => {
     if (lastDirectionPressed != null) {
@@ -87,6 +91,10 @@ function stop(): void {
   }
 }
 
+function toggleCompetitiveMode(newValue: boolean) {
+  competitiveMode = newValue;
+}
+
 /**
  Main presenter class, used to initialize the code.
  @class Presenter
@@ -101,5 +109,6 @@ export class Presenter {
     view.onStartButtonClicked(init);
     view.onStopButtonClicked(stop);
     view.onDirectionChanged(changeDirection);
+    view.onCompetitiveModeClicked(toggleCompetitiveMode);
   }
 }

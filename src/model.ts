@@ -11,6 +11,7 @@ export interface GameModel {
   food: Point[];
   snake: Point[];
   gameOver: boolean;
+  score: number;
   moveSnake(direction: Direction): void;
 }
 
@@ -52,8 +53,12 @@ export class Point {
  @param {number} height  - the height of the canvas
  @return {GameModel}    - the new snakegamemodel
 */
-export function newModel(width: number, height: number): GameModel {
-  return new SnakeGameModel(width, height);
+export function newModel(
+  width: number,
+  height: number,
+  competitiveMode: boolean
+): GameModel {
+  return new SnakeGameModel(width, height, competitiveMode);
 }
 
 /**
@@ -65,23 +70,27 @@ class SnakeGameModel implements GameModel {
   food: Point[] = [];
   snake: Point[] = [];
   gameOver = false;
+  score: number;
   private maxWidth;
   private maxHeight;
   private width;
   private height;
+  private competitiveMode;
 
   /**
    @desc creates a new SnakeGameModel with a snake and food within the canvas.
    @param {number} width  - the width of the canvas
    @param {number} height - the height of the canvas
   */
-  constructor(width: number, height: number) {
+  constructor(width: number, height: number, competitiveMode: boolean) {
     this.width = width;
     this.height = height;
     this.maxWidth = width - settings.STEP;
     this.maxHeight = height - settings.STEP;
     this.food = this.createFoods(settings.NUM_FOODS);
     this.snake = this.createStartSnake();
+    this.competitiveMode = competitiveMode;
+    this.score = 0;
   }
 
   /**
@@ -223,6 +232,10 @@ class SnakeGameModel implements GameModel {
       this.snake.shift();
     } else {
       this.food = this.food.filter((element) => !element.collidesWith(oldHead));
+      if (this.competitiveMode) {
+        this.score += settings.SCORE_PER_FOOD;
+        this.food = this.food.concat(this.createFoods(1));
+      }
     }
   }
 }

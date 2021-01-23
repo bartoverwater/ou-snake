@@ -29,12 +29,40 @@
           </ul>
         </nav>
         <article>
-          <h2 class="sectiontitle">Snake</h2>
-          <div class="buttons">
-            <button id="startSnake" type="button">Start</button>
-            <button id="stopSnake" type="button">Stop</button>
+          <div class="game-container">
+            <div class="game">
+              <h2 class="sectiontitle">Snake</h2>
+              <div class="buttons">
+                <button id="startSnake" type="button">Start</button>
+                <button id="stopSnake" type="button">Stop</button>
+              </div>
+              <canvas id="mySnakeCanvas" width="380" height="380"></canvas>
+            </div>
+            <div class="comp-mode">
+              <div class="comp-mode-checkbox-container">
+                <input id="comp-mode-checkbox" type="checkbox" />
+                <label for="comp-mode-checkbox">Competitive Mode</label>
+              </div>
+              <table id="highscore-table" class="hidden">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Points</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dom</td>
+                    <td>6000</td>
+                  </tr>
+                  <tr>
+                    <td>Melissa</td>
+                    <td>5150</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <canvas id="mySnakeCanvas" width="380" height="380"></canvas>
         </article>
       </main>
     </div>
