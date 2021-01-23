@@ -124,7 +124,6 @@ export function onDirectionChanged(
 
 /**
  @function drawPoint(point) -> void
- NB zoals het er nu staat, moet het eigenlijk @const ipv @function zijn...
  @desc Draws the given point on the canvas.
  @param {Point} point Point to draw on the canvas.
  */
