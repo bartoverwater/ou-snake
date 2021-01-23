@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Direction } from "./direction.js";
 import { GameModel, Point } from "./model.js";
 import settings from "./game-settings.js";

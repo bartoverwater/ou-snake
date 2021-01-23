@@ -8,12 +8,11 @@ We hebben niet kunnen vinden waarom JSDoc niet alle documentatie in de gegeneree
 
 ## View
 
-De view heeft één verantwoordelijkheid het weergeven van het spel waarin de speler speelt met bijbehorende functieknoppen,
-heeft geen afhankelijkheden en geen directe link met de Presenter.
+De view heeft één verantwoordelijkheid, het weergeven van het spel waarin de speler speelt met bijbehorende functieknoppen, heeft geen afhankelijkheden en geen directe link met de Presenter.
 
 Bij het laden van de code wordt een functie aan de onStartButtonClicked,
 onStopButtonClicked en onDirectionChanged functies gegeven. Deze parameterfuncties worden als clicklistener aan de DOM toegevoegd.
-We hebben ervoor gekozen om bij het einde van het spel (door te winnen of door gameover) 
+We hebben ervoor gekozen om bij het einde van het spel (door te winnen of door gameover)
 of bij het drukken op de stop-knop het canvas niet leeg te maken, maar juist de eindtoestand te laten behouden.
 
 Door de view functies te geven die moeten worden aangeroepen bij een DOM event, heeft de view geen directe communicatie met de Presenter.
@@ -37,9 +36,8 @@ De event loop loopt elke 500 miliseconden (in te stellen in game-settings) en st
 
 Het Model exporteert een GameModel interface, een Point class en een methode om een GameModel instantie te maken.
 
-Het verloop van het spel en de spelregels zijn grotendeels in het Model geïmplementeerd, 
-dat wil zeggen de mogelijkheden voor bewegingen, de vervolgacties van het raken van voedsel
-of van botsingen van de slang met zichzelf en natuurlijk of de speler het spel gewonnen of verloren heeft.
+Het verloop van het spel en de spelregels zijn grotendeels in het Model geïmplementeerd,
+dat wil zeggen de mogelijkheden voor bewegingen, de vervolgacties van het raken van voedsel of van botsingen van de slang met zichzelf en natuurlijk of de speler het spel gewonnen of verloren heeft.
 
 #### Point
 
@@ -57,7 +55,7 @@ We hebben geprobeerd alle 'state' uit de Presenter en View te houden en in het M
 
 ## Game-Settings en Direction
 
-We hebben gekozen om alle 'game-settings' in een apart bestand te zetten zodat deze gemakkelijk op één plek aan te passen zijn.
+We hebben ervoor gekozen om alle 'game-settings' in een apart bestand te zetten zodat deze gemakkelijk op één plek aan te passen zijn.
 
 Voor de Direction(Up, Down, Left, Right) hebben we een enum gemaakt in een apart bestand.
 
