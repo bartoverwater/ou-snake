@@ -65,7 +65,12 @@ Voor de Direction(Up, Down, Left, Right) hebben we een enum gemaakt in een apart
 
 ## Site starten en testen
 
-Om de tests te draaien:
+Download de dependencies:
+```
+npm install
+```
+
+Tests draaien:
 
 ```
 $ npm test
