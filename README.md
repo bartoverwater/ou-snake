@@ -93,6 +93,16 @@ In Competitive Mode speel je voor een zo hoog mogelijke score. De slang zal zich
 
 Wanneer het spel game-over is zal je score naar de database verzonden worden en wordt de highscore tabel geüpdatet met je verkregen positie.
 
+### Tests
+
+We hebben het helaas niet voor elkaar gekregen de tests op de qunit pagina te laten zien. De tests zijn wel gewoon te draaien
+met het command line commando:
+
+```
+$ npm test
+```
+
+
 ### Site starten en testen
 
 Download de dependencies:
