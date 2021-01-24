@@ -93,6 +93,12 @@ function stop(): void {
   }
 }
 
+/**
+@function toggleCompetitiveMode(newValue) -> void
+@desc a function to present the player with the list of
+      highscores if competitive mode is chosen.
+@param {boolean} newValue true when player chooses competitive mode, false otherwise.
+*/
 function toggleCompetitiveMode(newValue: boolean) {
   competitiveMode = newValue;
   if (competitiveMode) {
@@ -101,7 +107,14 @@ function toggleCompetitiveMode(newValue: boolean) {
   }
 }
 
-async function persistScore(score: number | undefined) {
+/**
+@function persistScore(score) -> void
+@desc adds a player's name and score to the list of highscores
+      if competitive mode is chosen ánd his score is higher than previous scores.
+@param {number | undefined} score the endscore (when competitive mode is chosen,
+        otherwise undefined)
+*/
+function persistScore(score: number | undefined) {
   if (score && competitiveMode) {
     highscore.insertScore(
       {
