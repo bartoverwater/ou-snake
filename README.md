@@ -5,15 +5,21 @@ Hieronder vindt u de uitleg bij onze Snake applicatie.
 We hebben zoveel mogelijk methoden en klassen van documentatie voorzien, helaas wordt niet alle documentatie op de JSDoc pagina weergegeven.
 We hebben niet kunnen vinden waarom JSDoc niet alle documentatie in de gegenereerde webpagina weergeeft.
 
+De methodes die wel documentatie bevatten maar niet in JSDoc te zien zijn, zijn onder andere:
+- Presenter.init
+- Presenter.load
+- Point.collidesWith
+- Model.newModel
+- Model.getRandomInt
+- Model.roundToNearestGridCell
 
 ## View
 
-De view heeft één verantwoordelijkheid het weergeven van het spel waarin de speler speelt met bijbehorende functieknoppen,
-heeft geen afhankelijkheden en geen directe link met de Presenter.
+De view heeft één verantwoordelijkheid, het weergeven van het spel waarin de speler speelt met bijbehorende functieknoppen, heeft geen afhankelijkheden en geen directe link met de Presenter.
 
 Bij het laden van de code wordt een functie aan de onStartButtonClicked,
 onStopButtonClicked en onDirectionChanged functies gegeven. Deze parameterfuncties worden als clicklistener aan de DOM toegevoegd.
-We hebben ervoor gekozen om bij het einde van het spel (door te winnen of door gameover) 
+We hebben ervoor gekozen om bij het einde van het spel (door te winnen of door gameover)
 of bij het drukken op de stop-knop het canvas niet leeg te maken, maar juist de eindtoestand te laten behouden.
 
 Door de view functies te geven die moeten worden aangeroepen bij een DOM event, heeft de view geen directe communicatie met de Presenter.
@@ -37,17 +43,19 @@ De event loop loopt elke 500 miliseconden (in te stellen in game-settings) en st
 
 Het Model exporteert een GameModel interface, een Point class en een methode om een GameModel instantie te maken.
 
-Het verloop van het spel en de spelregels zijn grotendeels in het Model geïmplementeerd, 
-dat wil zeggen de mogelijkheden voor bewegingen, de vervolgacties van het raken van voedsel
-of van botsingen van de slang met zichzelf en natuurlijk of de speler het spel gewonnen of verloren heeft.
+Het verloop van het spel en de spelregels zijn grotendeels in het Model geïmplementeerd,
+dat wil zeggen de mogelijkheden voor bewegingen, de vervolgacties van het raken van voedsel of van botsingen van de slang met zichzelf en natuurlijk of de speler het spel gewonnen of verloren heeft.
 
 #### Point
 
 Point is een klasse die een punt op het canvas representeert, met een x- en y-attribuut en een kleur. Instanties hiervan worden in het Model aangemaakt en via de Presenter doorgegeven aan de View om op het canvas te worden getekend.
 
+We hebben hier gekozen voor een klasse in plaats van een interface zodat we de collidesWith(otherPoint) methode in de klasse konden plaatsen.
+
 #### GameModel
 
-De GameModel-interface is een laag over de SnakeGameModel-klasse en laat in één oogopslag zien welke functies er van buitenaf aangeroepen kunnen worden.
+Het GameModel-interface is een laag over de SnakeGameModel-klasse, we hebben hier gekozen om een interface te exporteren in plaats van de klasse zodat het 
+in één oogopslag duidelijk is wat er van buitenaf aangeroepen kan worden en het makkelijker wordt om andere game-models met andere regels te implementeren.
 
 Het GameModel bevat een array met voedsel-points, een array met snake-points, een boolean die aangeeft of het spel 'game-over' is en een methode om de slang te laten bewegen.
 
@@ -57,7 +65,7 @@ We hebben geprobeerd alle 'state' uit de Presenter en View te houden en in het M
 
 ## Game-Settings en Direction
 
-We hebben gekozen om alle 'game-settings' in een apart bestand te zetten zodat deze gemakkelijk op één plek aan te passen zijn.
+We hebben ervoor gekozen om alle 'game-settings' in een apart bestand te zetten zodat deze gemakkelijk op één plek aan te passen zijn.
 
 Voor de Direction(Up, Down, Left, Right) hebben we een enum gemaakt in een apart bestand.
 
