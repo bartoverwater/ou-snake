@@ -101,7 +101,7 @@ function toggleCompetitiveMode(newValue: boolean) {
   }
 }
 
-async function persistScore(score: number | undefined) {
+function persistScore(score: number | undefined) {
   if (score && competitiveMode) {
     highscore.insertScore(
       {

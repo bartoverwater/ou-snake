@@ -133,7 +133,6 @@ export function onCompetitiveModeClicked(func: (bool: boolean) => void): void {
     if (checkBox.checked) {
       compModeFields.classList.remove("hidden");
       scoreDiv.classList.remove("hidden");
-      (<HTMLInputElement>document.getElementById("playername"))?.validity.valid;
     } else {
       compModeFields.classList.add("hidden");
       scoreDiv.classList.add("hidden");
