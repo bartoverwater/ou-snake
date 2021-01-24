@@ -1,5 +1,5 @@
 export interface HighscoreEntry {
-  _id: string;
+  _id: string | null;
   name: string;
   score: number;
 }

@@ -102,7 +102,7 @@ async function persistScore(score: number | undefined) {
   if (score && competitiveMode) {
     highscore.insertScore(
       {
-        _id: "",
+        _id: null,
         name: view.getPlayerName(),
         score: score,
       },
