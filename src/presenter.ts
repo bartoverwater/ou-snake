@@ -2,6 +2,7 @@ import { Direction } from "./direction.js";
 import * as view from "./view.js";
 import { GameModel, newModel } from "./model.js";
 import settings from "./game-settings.js";
+import * as highscore from "./highscore.js";
 
 /** @module Presenter */
 
@@ -39,14 +40,12 @@ function init(width: number, height: number) {
  */
 function eventLoop(): void {
   if (model == null || model.gameOver) {
+    persistScore(model?.score);
     view.showGameOver();
     return;
   } else if (model.food.length == 0) {
     view.showGameWon();
     return;
-  }
-  if (competitiveMode) {
-    console.log(model.score);
   }
   timeOut = setTimeout(() => {
     if (lastDirectionPressed != null) {
@@ -93,6 +92,23 @@ function stop(): void {
 
 function toggleCompetitiveMode(newValue: boolean) {
   competitiveMode = newValue;
+  if (competitiveMode) {
+    const highscores = highscore.getHighscoreList();
+    view.fillHighScoreList(highscores);
+  }
+}
+
+async function persistScore(score: number | undefined) {
+  if (score && competitiveMode) {
+    highscore.insertScore(
+      {
+        _id: "",
+        name: view.getPlayerName(),
+        score: score,
+      },
+      () => view.fillHighScoreList(highscore.getHighscoreList())
+    );
+  }
 }
 
 /**

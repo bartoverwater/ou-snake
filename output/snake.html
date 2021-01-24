@@ -36,6 +36,7 @@
                 <button id="startSnake" type="button">Start</button>
                 <button id="stopSnake" type="button">Stop</button>
               </div>
+              <div id="score" class="hidden"></div>
               <canvas id="mySnakeCanvas" width="380" height="380"></canvas>
             </div>
             <div class="comp-mode">
@@ -43,24 +44,28 @@
                 <input id="comp-mode-checkbox" type="checkbox" />
                 <label for="comp-mode-checkbox">Competitive Mode</label>
               </div>
-              <table id="highscore-table" class="hidden">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Points</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Dom</td>
-                    <td>6000</td>
-                  </tr>
-                  <tr>
-                    <td>Melissa</td>
-                    <td>5150</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div id="comp-mode-input-table" class="hidden">
+                <input
+                  type="name"
+                  id="playername"
+                  placeholder="Please Enter Your Name"
+                  required
+                />
+                <table id="highscore-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Points</th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-body">
+                    <tr>
+                      <td>loading...</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </article>

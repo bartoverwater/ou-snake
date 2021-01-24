@@ -166,13 +166,23 @@ li > a {
   padding: 8.25em 2em;
 }
 
+@media (max-width: 724px) {
+  .game-container {
+    flex-direction: column;
+  }
+
+  .comp-mode {
+    padding: 1em 2em;
+  }
+}
+
 .comp-mode-checkbox-container {
   display: block;
 }
 
 #highscore-table {
   border-collapse: collapse;
-  margin: 25px 0;
+  margin: 25px auto;
   font-size: 0.9em;
   min-width: 10rem;
   font-family: sans-serif;
@@ -202,6 +212,33 @@ li > a {
   text-align: left;
 }
 
+#comp-mode-input-table {
+  align-items: center;
+}
+
+.playernamelabel {
+  display: block;
+  padding: 0.5em 0;
+}
+
+#playername {
+  max-width: 75%;
+  margin-top: 0.5em;
+}
+
+#score {
+  padding-bottom: 0.25em;
+  font-weight: 900;
+}
+
 .hidden {
   visibility: hidden;
+}
+
+:required {
+  border-color: red;
+}
+
+:required:valid {
+  border-color: green;
 }

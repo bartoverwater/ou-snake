@@ -1,6 +1,7 @@
 import { Direction } from "./direction.js";
 import { GameModel, Point } from "./model.js";
 import settings from "./game-settings.js";
+import { HighscoreEntry } from "./highscore.js";
 /** @module View */
 
 /**
@@ -23,11 +24,9 @@ const canvasContext: CanvasRenderingContext2D = canvas.getContext("2d")!;
 export function onStartButtonClicked(
   onStartFunction: (width: number, height: number) => void
 ): void {
-  document
-    .getElementById("startSnake")!
-    .addEventListener("click", () =>
-      onStartFunction(canvas.width, canvas.height)
-    );
+  document.getElementById("startSnake")!.addEventListener("click", () => {
+    onStartFunction(canvas.width, canvas.height);
+  });
 }
 
 /**
@@ -79,12 +78,14 @@ export function onStopButtonClicked(
   });
 }
 
+let scoreDiv: HTMLElement;
 /**
  @function drawModelOnCanvas(model) -> void
  @desc Clears the canvas and then draws the snake and food arrays from the model on the canvas.
  @param {GameModel} model A model to draw on the canvas.
  */
 export function drawModelOnCanvas(model: GameModel): void {
+  scoreDiv.textContent = model.score?.toString();
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
   model.food.forEach(drawPoint);
   model.snake.forEach(drawPoint);
@@ -125,14 +126,41 @@ export function onCompetitiveModeClicked(func: (bool: boolean) => void): void {
   const checkBox = <HTMLInputElement>(
     document.getElementById("comp-mode-checkbox")!
   );
-  const highscoreTable = document.getElementById("highscore-table")!;
+  scoreDiv = document.getElementById("score")!;
+  const compModeFields = document.getElementById("comp-mode-input-table")!;
   checkBox.addEventListener("change", function () {
     func(checkBox.checked);
     if (checkBox.checked) {
-      highscoreTable.className = "";
+      compModeFields.classList.remove("hidden");
+      scoreDiv.classList.remove("hidden");
+      (<HTMLInputElement>document.getElementById("playername"))?.validity.valid;
     } else {
-      highscoreTable.className = "hidden";
+      compModeFields.classList.add("hidden");
+      scoreDiv.classList.add("hidden");
     }
+  });
+}
+
+export function getPlayerName(): string {
+  return (<HTMLInputElement>document.getElementById("playername"))?.value;
+}
+
+export function fillHighScoreList(scores: Promise<HighscoreEntry[]>): void {
+  scores.then((data) => fillHtmlTable(data)).catch((err) => console.log(err));
+}
+
+function fillHtmlTable(data: HighscoreEntry[]) {
+  const tableBody = document.getElementById("table-body");
+  tableBody!.innerHTML = "";
+  data.forEach((scoreEntry) => {
+    const tr = document.createElement("tr");
+    const tdName = document.createElement("td");
+    tdName.textContent = scoreEntry.name;
+    tr.appendChild(tdName);
+    const tdScore = document.createElement("td");
+    tdScore.textContent = scoreEntry.score.toString();
+    tr.appendChild(tdScore);
+    tableBody?.appendChild(tr);
   });
 }
 
