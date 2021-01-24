@@ -2,6 +2,7 @@ import { Direction } from "./direction.js";
 import { GameModel, Point } from "./model.js";
 import settings from "./game-settings.js";
 import { HighscoreEntry } from "./highscore.js";
+
 /** @module View */
 
 /**
@@ -79,6 +80,7 @@ export function onStopButtonClicked(
 }
 
 let scoreDiv: HTMLElement;
+
 /**
  @function drawModelOnCanvas(model) -> void
  @desc Clears the canvas and then draws the snake and food arrays from the model on the canvas.
@@ -122,6 +124,12 @@ export function onDirectionChanged(
   });
 }
 
+/**
+@function onCompetitiveModeClicked(func: (bool) -> void) -> void
+@desc adds an element to the page to keep track of the score during the game
+      when competitive mode is chosen.
+@param {function(bool):void} func the function to hide or display the scoreboard.
+*/
 export function onCompetitiveModeClicked(func: (bool: boolean) => void): void {
   const checkBox = <HTMLInputElement>(
     document.getElementById("comp-mode-checkbox")!
@@ -140,14 +148,30 @@ export function onCompetitiveModeClicked(func: (bool: boolean) => void): void {
   });
 }
 
+/**
+@function getPlayerName() -> string
+@desc retrieves the name the player enters in the input-field.
+@return {string}  - the name of the player
+*/
 export function getPlayerName(): string {
   return (<HTMLInputElement>document.getElementById("playername"))?.value;
 }
 
+/**
+@function fillHighScoreList(scores) -> void
+@desc creates a scoreboard and fills it with stored high scores
+@param {Promise<HighscoreEntry[]>} scores - the list of stored high scores
+*/
 export function fillHighScoreList(scores: Promise<HighscoreEntry[]>): void {
   scores.then((data) => fillHtmlTable(data)).catch((err) => console.log(err));
 }
 
+/**
+@function fillHtmlTable(data) -> void
+@desc creates a table element on the page to display player names and their
+      high scores
+@param {HighscoreEntry[]} data the stored player names and their scores.
+*/
 function fillHtmlTable(data: HighscoreEntry[]) {
   const tableBody = document.getElementById("table-body");
   tableBody!.innerHTML = "";
