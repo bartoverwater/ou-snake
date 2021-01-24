@@ -47,17 +47,20 @@ function eventLoop(): void {
     view.showGameWon();
     return;
   }
-  timeOut = setTimeout(() => {
-    if (lastDirectionPressed != null) {
-      direction = lastDirectionPressed;
-    }
-    model?.moveSnake(direction);
-    lastDirectionPressed = null;
-    if (model != null) {
-      view.drawModelOnCanvas(model);
-    }
-    eventLoop();
-  }, settings.SLEEPTIME);
+  timeOut = setTimeout(
+    () => {
+      if (lastDirectionPressed != null) {
+        direction = lastDirectionPressed;
+      }
+      model?.moveSnake(direction);
+      lastDirectionPressed = null;
+      if (model != null) {
+        view.drawModelOnCanvas(model);
+      }
+      eventLoop();
+    },
+    competitiveMode ? settings.COMPETITIVE_SLEEPTIME : settings.SLEEPTIME
+  );
 }
 
 /**

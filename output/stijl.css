@@ -180,6 +180,14 @@ li > a {
   display: block;
 }
 
+.comp-mode-label {
+  color: var(--primary-color);
+  text-decoration: none;
+  border-radius: 0.25em;
+  background: var(--secondary-color);
+  font-size: large;
+}
+
 #highscore-table {
   border-collapse: collapse;
   margin: 25px auto;
