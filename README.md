@@ -91,7 +91,7 @@ Als extra functie hebben we Competitive Mode toegevoegd. Wanneer je het vinkje n
 zal het spel starten in Competitive Mode.
 
 In Competitive Mode speel je voor een zo hoog mogelijke score. De slang zal zich sneller bewegen en wanneer er een voedsel
-element opgegeten is, zal er een nieuw voedsel element verschijnen. Elk opgegeten voedsel element voegt 10 punten aan je score toe.
+element opgegeten is, zal er een nieuw voedsel element verschijnen. Elk opgegeten voedsel element voegt 10 punten toe aan je score.
 
 Wanneer het spel game-over is zal je score naar de database verzonden worden en word de highscore tabel geupdate met je verkregen positie.
 
