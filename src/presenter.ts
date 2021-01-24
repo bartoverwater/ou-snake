@@ -95,8 +95,9 @@ function stop(): void {
 
 /**
 @function toggleCompetitiveMode(newValue) -> void
-@desc a function to present the player with the list of
-      highscores if competitive mode is chosen.
+@desc When newValue is true: This function will put the game in competitive mode, retrieve highscores from the database 
+      and calls the view to show the highscores on the page.
+      When newValue is false: This function will disable competitive mode and call the view to hide all competitive mode elements.
 @param {boolean} newValue true when player chooses competitive mode, false otherwise.
 */
 function toggleCompetitiveMode(newValue: boolean) {

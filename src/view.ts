@@ -128,7 +128,7 @@ export function onDirectionChanged(
 @function onCompetitiveModeClicked(func: (bool) -> void) -> void
 @desc adds an element to the page to keep track of the score during the game
       when competitive mode is chosen.
-@param {function(bool):void} func the function to hide or display the scoreboard.
+@param {function(bool):void} func The function to call when the checkbox changes value.
 */
 export function onCompetitiveModeClicked(func: (bool: boolean) => void): void {
   const checkBox = <HTMLInputElement>(

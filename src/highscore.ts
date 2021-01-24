@@ -14,13 +14,14 @@ export interface HighscoreEntry {
 
 /** Database rest api */
 const url = "https://snakeou-d554.restdb.io/rest/score";
+
 /**
+ * @function request(httpMethod) -> void
  * @desc Helper method to easily create requests. Contains header with the api key
  *
  * @param {string} httpMethod The http request method (GET|POST|PUT|PATCH|DELETE)
- * @return {*}
  */
-const request = (httpMethod: string) => {
+function request(httpMethod: string) {
   return {
     method: httpMethod,
     headers: {
@@ -30,11 +31,11 @@ const request = (httpMethod: string) => {
     },
     json: true,
   };
-};
+}
 
 /**
  * @desc Retrieves all scores from the database, sorted descending by score.
- *
+ * @function getHighscoreList() -> Promise<HighscoreEntry[]>
  * @export
  * @return {Promise<HighscoreEntry[]>} A promise containing all scores from the database.
  */
@@ -46,7 +47,7 @@ export async function getHighscoreList(): Promise<HighscoreEntry[]> {
 /**
  * @desc Inserts new scores into the database. Creates a new entry if the playername is unknown, updates the database entry when the
  * playername is known and the new score is higher than the old score.
- *
+ * @function insertScore(newEntry,andThen) => void
  * @export
  * @param {HighscoreEntry} newEntry The new score of the player with playername.
  * @param {function} andThen The function to call when the database is updated.
